@@ -5,7 +5,11 @@ var express = require( "express" ),
 	$DB = require( './data/' ),
 	$routes = require( './routes/' );
 var app = express( );
-app.use( express.logger( ) );
+//	logging method
+app.use( function ( req, res, next ) {
+	$logger.trace( '[http] ' + req.method + ' > ' + req.url );
+	next( );
+} );
 // Configuration
 app.configure( function ( ) {
 	app.set( 'port', process.env.PORT || 5000 )
@@ -16,8 +20,10 @@ app.configure( function ( ) {
 } );
 //	Admin http routes
 app.get( '/api/v1/apps', $routes.apps.get );
+app.get( '/api/v1/apps/:_id', $routes.apps.query );
 app.post( '/api/v1/apps', $routes.apps.post );
-app.delete('/api/v1/apps/:_id', $routes.apps.delete);
+app.post( '/api/v1/apps/:_id', $routes.apps.update );
+app.del( '/api/v1/apps/:id', $routes.apps.delete );
 //	Start Admin Http interface
 app.listen( app.get( 'port' ), function ( ) {
 	$logger.info( "Listening on " + app.get( 'port' ) );
@@ -36,14 +42,13 @@ function proxyStart( ) {
 		if ( err ) $logger.error( err );
 		else {
 			//	map returned object as domain:target hash
-			var routes = _.map( $apps, function ( $app ) {
-				var O = new Object( );
-				O[ $app.domain ] = $app.target;
-				return O;
+			var routes = {};
+			_.each( $apps, function ( $app ) {
+				routes[ $app.domain ] = $app.target;
 			} );
 			if ( routes ) {
 				//	configure and start proxy
-				var $proxy = $Proxy( 80, routes[0] );
+				var $proxy = $Proxy( 80, routes );
 				$proxy.listen( );
 			}
 		}

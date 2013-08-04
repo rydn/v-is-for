@@ -10,12 +10,15 @@ angular.module( 'vIsForVirtualApp', [ 'ngResource' ] )
 				templateUrl: 'views/settings.html',
 				controller: 'SettingsCtrl'
 			} )
-			.when('/apps/:_id/delete',{
-				templateUrl:'views/confirmDelete.html',
-				controller:'ConfirmDeleteCtrl'
-			})
+			.when( '/apps/:_id/delete', {
+				templateUrl: 'views/confirmDelete.html',
+				controller: 'ConfirmDeleteCtrl'
+			} )
+			.when( '/apps/:_id', {
+				templateUrl: 'views/viewApp.html',
+				controller: 'ViewappCtrl'
+			} )
 			.otherwise( {
 				redirectTo: '/'
 			} );
 	} );
-	

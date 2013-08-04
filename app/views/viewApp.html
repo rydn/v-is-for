@@ -1,0 +1,44 @@
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>{{app.name}}</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="inputName">App Name</label>
+  <div class="controls">
+    <input id="inputName" name="inputName" type="text" placeholder="myapp" class="input-medium" required="" ng-model="app.name">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="inputUrl">App Url</label>
+  <div class="controls">
+    <input id="inputUrl" name="inputUrl" type="text" placeholder="myapp.mydomain.com" class="input-medium" required="" ng-model="app.domain">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="inputPath">App Root Path</label>
+  <div class="controls">
+    <input id="inputPath" name="inputPath" type="text" placeholder="/home/bob/apps/myApp" class="input-large" required="" ng-model="app.rootpath">
+    <p class="help-block">this is the path for the base folder of your project</p>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="inputStatupConf">Startup Config File</label>
+  <div class="controls">
+    <input id="inputStatupConf" name="inputStatupConf" type="text" placeholder="pm2-myapp.json" class="input-medium" required="" ng-model="app.startConf">
+    <p class="help-block">path relative to the above root path, json file containing configurations for pm2 daemon monitor</p>
+  </div>
+</div>
+
+</fieldset>
+</form>

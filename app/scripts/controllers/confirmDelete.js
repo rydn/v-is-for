@@ -1,22 +1,20 @@
-'use strict';
 angular.module( 'vIsForVirtualApp' )
-	.controller( 'ConfirmDeleteCtrl', function ( $scope, $rootScope, $resource, $routeParams ) {
+	.controller( 'ConfirmDeleteCtrl', function ( $scope, $resource, $routeParams, $location ) {
 		//  resource providers
 		var Apps = $resource( '/api/v1/apps/:id', {
 			id: '@_id'
 		} );
-		
-			console.log(Apps);
-		$scope.app = Apps.query({_id:$routeParams._id});
-
+		//	get app to delete
+		var app = Apps.query( {
+			id: $routeParams._id
+		}, function ( ) {
+			$scope.app = app[ 0 ];
+		} );
 		//	delete method
-		$scope.delete = function ( _id ) {
-			console.log(_id);
-			var that = Apps.$remove( {
-				_id: _id
+		$scope.deleteApp = function ( ) {
+			var that = Apps.delete( {
+				id: $scope.app._id
 			} );
-			console.log( that );
-			//	update view
-			$scope.apps = Apps.query( );
+			$location.path( '/' );
 		};
 	} );

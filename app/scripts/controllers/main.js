@@ -1,6 +1,6 @@
 'use strict';
 angular.module( 'vIsForVirtualApp' )
-	.controller( 'MainCtrl', function ( $scope, $rootScope, $resource ) {
+	.controller( 'MainCtrl', function ( $scope, $rootScope, $resource, $http ) {
 		//  resource providers
 		var Apps = $resource( '/api/v1/apps/:id', {
 			id: '@_id'
@@ -37,12 +37,21 @@ angular.module( 'vIsForVirtualApp' )
 		};
 		//	delete method
 		$scope.delete = function ( _id ) {
-			console.log(_id);
+			console.log( _id );
 			var that = Apps.delete( {
 				_id: _id
 			} );
 			console.log( that );
 			//	update view
 			$scope.apps = Apps.query( );
+		};
+		//	update
+		$scope.updateApp = function ( attr, value, _id ) {
+			$http.post( '/api/v1/apps/' + _id, {
+				param: attr,
+				value: value
+			} ).success( function ( response ) {
+				console.log( response );
+			} );
 		};
 	} );

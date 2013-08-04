@@ -1,0 +1,9 @@
+<form class="form-inline">
+  <input class="input input-xsmall" type="text" on-enter="save()" on-esc="cancel()" ng-model="model" ng-show="editMode">
+  <button class="btn btn-xxsmall" ng-click="cancel()" ng-show="editMode">cancel</button>
+  <button class="btn btn-xxsmall btn-inverse" ng-click="save()" ng-show="editMode">save</button>
+  <span ng-mouseenter="showEdit = true" ng-mouseleave="showEdit = false">
+    <span ng-hide="editMode" ng-click="edit()">{{model}}</span>
+    <a ng-show="showEdit" ng-click="edit()">edit</a>
+  </span>
+</form>

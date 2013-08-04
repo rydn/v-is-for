@@ -1,81 +1,89 @@
 <div class="row-fluid">
     <div class="span4">
         <div class="well well-small">
-        <form class="form-horizontal">
-            <fieldset>
+            <form class="form-horizontal">
+                <fieldset>
 
-                <!-- Form Name -->
-                <legend>Add New App</legend>
+                    <!-- Form Name -->
+                    <legend>Add New App</legend>
 
-                <!-- Text input-->
-                <div class="control-group">
-                    <label class="control-label" for="AppName">App Name</label>
-                    <div class="controls">
-                        <input id="appName" name="AppName" type="text" placeholder="MyApp" class="input-large" ng-model="inputAppName" required="">
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for="AppName">App Name</label>
+                        <div class="controls">
+                            <input id="appName" name="AppName" type="text" placeholder="MyApp" class="input" ng-model="inputAppName" required="">
 
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="control-group">
-                    <label class="control-label" for="domain">App Domain</label>
-                    <div class="controls">
-                        <input id="domain" name="domain" type="text" placeholder="myapp.domain.com" class="input-large" ng-model="inputDomain" required="">
-                        <p class="help-block">the domain you specify must point toward this host</p>
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for="domain">App Domain</label>
+                        <div class="controls">
+                            <input id="domain" name="domain" type="text" placeholder="myapp.domain.com" class="input" ng-model="inputDomain" required="">
+                            <p class="help-block">the domain you specify must point toward this host</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="control-group">
-                    <label class="control-label" for="target">App Target</label>
-                    <div class="controls">
-                        <input id="target" name="target" type="text" placeholder="localhost:3000" class="input-large" ng-model="inputTarget" required="">
-                        <p class="help-block">target hostname and port to proxy requests to</p>
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for="target">App Target</label>
+                        <div class="controls">
+                            <input id="target" name="target" type="text" placeholder="localhost:3000" class="input" ng-model="inputTarget" required="">
+                            <p class="help-block">target hostname and port to proxy requests to</p>
+                        </div>
                     </div>
-                </div>
-<hr />
-                <!-- Button (Double) -->
-                <div class="control-group">
-                    <label class="control-label" for="save"></label>
-                    <div class="controls">
-                        <button id="save" name="save" ng-click="save()" class="btn btn-inverse pull-right">Create</button>
+                    <hr />
+                    <!-- Button (Double) -->
+                    <div class="control-group">
+                        <label class="control-label" for="save"></label>
+                        <div class="controls">
+                            <button id="save" name="save" ng-click="save()" class="btn btn-inverse pull-right">Create</button>
+                        </div>
                     </div>
-                </div>
 
-            </fieldset>
-        </form>
-    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
     <!--/span-->
     <div class="span8">
-         <div class="well well-small">
-        <h4>Current Apps</h4>
-        <table class="table table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Domain</th>
-                    <th>Target</th>
-                    <th>Health</th>
-                    <th>
-                        <!--Controls -->
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="app in apps">
-                    <td><a class="link" href="#/apps/:{{app._id}}"><strong>{{app.name}}</strong></a>
-                    </td>
-                    <td ng-bind="app.domain"></td>
-                    <td ng-bind="app.target"></td>
-                    <td ng-bind="app.health"></td>
-                    <td>
-                        <a class="btn btn-small" href="#/apps/{{app._id}}/delete"><i class="icon-remove"></i>&nbsp;</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="well well-small">
+            <h4>Current Apps</h4>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Domain</th>
+                        <th>Target</th>
+                        <th>Health</th>
+                        <th>
+                            <!--Controls -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="app in apps">
+                        <td>
+                            <a class="link" href="#/apps/:{{app._id}}">
+                                <strong>{{app.name}}</strong>
+                            </a>
+                        </td>
+
+                        <td>
+                            <span inline-edit="app.domain" on-save="updateApp('domain',  app.domain, app._id)" on-cancel="cancelEdit(app._id)" class="eie"></span>
+                        </td>
+                        <td>
+                            <span inline-edit="app.target" on-save="updateApp('target',  app.target, app._id)" on-cancel="cancelEdit(app._id)" class="eie"></span>
+                        </td>
+                        <td><i class="icon-ok-circle"></i></td>
+                        <td>
+                            <a class="btn btn-small" href="#/apps/{{app._id}}/delete"><i class="icon-remove"></i>&nbsp;</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <!--/row-->

@@ -8,9 +8,7 @@ module.exports = function ( routes ) {
 		if ( $this.routes[ req.headers.host ] ) {
 			bounce( this.routes[ req.headers.host ] );
 		} else {
-			
 			$logger.log( 'incomming request for unknown host: ' + req.headers.host );
-			console.log(res);
 		}
 	};
 	
