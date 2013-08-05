@@ -9,10 +9,10 @@ module.exports = function(userOptions ) {
 		options: userOptions.options || null,
 		autoRestart: userOptions.autoRestart || false,
 		restartTimeout: userOptions.restartTimeout || 200,
-		cbRestart: userOptions.cbRestart || function(data ) {};,
+		cbRestart: userOptions.cbRestart || function(data ) {},
 		cbStdout: userOptions.cbStdout || null,
 		cbStderr: userOptions.cbStderr || null,
-		cbClose: userOptions.cbClose || function(data ) {};
+		cbClose: userOptions.cbClose || function(data ) {}
 	};
 	obj.start = function(cb ) {
 		stopOrder = false;
