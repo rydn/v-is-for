@@ -1,5 +1,4 @@
 var express = require( "express" ),
-	_ = require( 'lodash' ),
 	$logger = require( './lib/logger' ),
 	$Proxy = require( './proxy/' ),
 	$DB = require( './data/' ),

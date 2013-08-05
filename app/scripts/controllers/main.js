@@ -67,6 +67,7 @@ angular.module( 'vIsForVirtualApp' )
 			$scope.inputTarget = null;
 			$scope.inputDomain = null;
 			$scope.inputAppName = null;
+			$.bootstrapGrowl("Adding new app...");
 			//	save to db
 			newHost.$save( function ( result ) {
 				if ( result ) {
@@ -74,11 +75,9 @@ angular.module( 'vIsForVirtualApp' )
 					$rootScope.alertTitle = 'Huraahhh!';
 					$rootScope.alertBody = 'your new app added!';
 					$( '#save' ).text( 'Create' ).removeAttr( 'disabled' );
-					$( '.alert' ).alert( );
+					$.bootstrapGrowl("Added new app.");
 				} else {
-					$rootScope.alertTitle = 'An error occured';
-					$rootScope.alertBody = 'failed to create object in db';
-					$( '.alert' ).alert( );
+					$.bootstrapGrowl("An error occured, please try again");
 				}
 			} )
 		};
@@ -87,40 +86,49 @@ angular.module( 'vIsForVirtualApp' )
 			var that = Apps.delete( {
 				_id: _id
 			} );
-			console.log( that );
+			
 			//	update view
 			getApps( );
+			$.bootstrapGrowl("App deleted.");
 		};
 		//	update
 		$scope.updateApp = function ( attr, value, _id ) {
+			$.bootstrapGrowl("Updating app...");
 			$http.post( '/api/v1/apps/' + _id, {
 				param: attr,
 				value: value
 			} ).success( function ( response ) {
 				//	update view
 				getApps( );
+				$.bootstrapGrowl("Updated app.");
 			} );
 		};
 		//////////////////////////////////
 		//	server action controllers //
 		//////////////////////////////////
 		$scope.startAll = function ( ) {
+			$.bootstrapGrowl("Starting all apps...");
 			$http.post( '/api/v1/appmanager/startall' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("Apps started.");
 					getApps( );
 				}, 500 );
 			} );
 		};
 		$scope.stopAll = function ( ) {
+			$.bootstrapGrowl("Stopping all apps...");
 			$http.post( '/api/v1/appmanager/stopall' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("All apps stopped.");
 					getApps( );
 				}, 500 );
 			} );
 		};
 		$scope.restartAll = function ( ) {
+			$.bootstrapGrowl("Restarting all apps...");
 			$http.post( '/api/v1/appmanager/restartall' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("All apps restarted.");
 					getApps( );
 				}, 500 );
 			} );
@@ -129,22 +137,28 @@ angular.module( 'vIsForVirtualApp' )
 		//	proxy action controllers //
 		/////////////////////////////////
 		$scope.proxyStart = function ( ) {
+			$.bootstrapGrowl("Starting Proxy...");
 			$http.post( '/api/v1/proxy/start' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("Proxy running.");
 					getProxyStatus();
 				}, 500 );
 			} );
 		};
 		$scope.proxyStop = function ( ) {
+			$.bootstrapGrowl("Stopping proxy...");
 			$http.post( '/api/v1/proxy/stop' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("Proxy stopped.");
 					getProxyStatus();
 				}, 500 );
 			} );
 		};
 		$scope.proxyRestart = function ( ) {
+			$.bootstrapGrowl("Restarting proxy...");
 			$http.post( '/api/v1/proxy/restart' ).success( function ( response ) {
 				setTimeout( function ( ) {
+					$.bootstrapGrowl("Proxy running.");
 					getProxyStatus();
 				}, 500 );
 			} );

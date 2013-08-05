@@ -1,3 +1,8 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900,700italic,500italic,400italic,300italic,900italic);
+body{
+	font-family: 'Roboto', sans-serif;
+	text-height: 13px;
+}
 .mainView{
     margin-top: 55px;
 }
@@ -16,4 +21,18 @@
 
 .edit-in-place.active input {
   display: inline-block;
+}
+
+.stat {
+	text-align: center;
+	font-size:12px;
+	font-weight: bold;
+
+}
+.kpi
+{
+	border-top: 1px solid #e3e3e3;
+	text-align: center;
+	font-size:12px;
+	font-weight: normal;
 }
