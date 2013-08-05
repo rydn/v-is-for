@@ -31,7 +31,23 @@ angular.module( 'vIsForVirtualApp' )
 				} );
 			} );
 		};
+		var getProxyStatus = function ( ) {
+			$http.get( '/api/v1/proxy' ).success( function ( proxyStatus ) {
+				if ( proxyStatus.status ) {
+					$rootScope.proxyStatus = proxyStatus.status;
+					if ( proxyStatus.status == 'running' ) {
+						$rootScope.proxyOkay = true;
+					} else {
+						$rootScope.proxyOkay = false;
+					}
+				}
+			} );
+		}
+		///////////////////
+		//	initialize //
+		///////////////////
 		getApps( );
+		getProxyStatus( );
 		//////////////////////
 		//	SCOPE METHODS //
 		//////////////////////
@@ -86,21 +102,51 @@ angular.module( 'vIsForVirtualApp' )
 			} );
 		};
 		//////////////////////////////////
-		//	Global action controllers //
+		//	server action controllers //
 		//////////////////////////////////
-		$rootScope.startAll = function ( ) {
+		$scope.startAll = function ( ) {
 			$http.post( '/api/v1/appmanager/startall' ).success( function ( response ) {
-				getApps( );
+				setTimeout( function ( ) {
+					getApps( );
+				}, 500 );
 			} );
 		};
-		$rootScope.stopAll = function ( ) {
+		$scope.stopAll = function ( ) {
 			$http.post( '/api/v1/appmanager/stopall' ).success( function ( response ) {
-				getApps( );
+				setTimeout( function ( ) {
+					getApps( );
+				}, 500 );
 			} );
 		};
-		$rootScope.restartAll = function ( ) {
+		$scope.restartAll = function ( ) {
 			$http.post( '/api/v1/appmanager/restartall' ).success( function ( response ) {
-				getApps( );
+				setTimeout( function ( ) {
+					getApps( );
+				}, 500 );
+			} );
+		};
+		/////////////////////////////////
+		//	proxy action controllers //
+		/////////////////////////////////
+		$scope.proxyStart = function ( ) {
+			$http.post( '/api/v1/proxy/start' ).success( function ( response ) {
+				setTimeout( function ( ) {
+					getProxyStatus();
+				}, 500 );
+			} );
+		};
+		$scope.proxyStop = function ( ) {
+			$http.post( '/api/v1/proxy/stop' ).success( function ( response ) {
+				setTimeout( function ( ) {
+					getProxyStatus();
+				}, 500 );
+			} );
+		};
+		$scope.proxyRestart = function ( ) {
+			$http.post( '/api/v1/proxy/restart' ).success( function ( response ) {
+				setTimeout( function ( ) {
+					getProxyStatus();
+				}, 500 );
 			} );
 		};
 	} );

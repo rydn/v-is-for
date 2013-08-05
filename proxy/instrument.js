@@ -10,8 +10,8 @@ module.exports = function ( ) {
 		if ( typeof ( req.headers ) !== 'undefined' ) {
 			db.zincrby( 'stats:user-agent', 1, req.headers[ 'user-agent' ] );
 		}
-		if ( typeof ( req.host ) !== 'undefined' ) {
-			db.zincrby( 'stats:persite', 1, req.host );
+		if ( typeof ( req.headers.host ) !== 'undefined' ) {
+			db.zincrby( 'stats:persite', 1, req.headers.host );
 		}
 		db.zincrby( 'stats:hits', 1, 'hit' );
 		next( );

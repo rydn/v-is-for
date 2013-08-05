@@ -30,7 +30,7 @@ module.exports = function ( options ) {
 						args: [ path.resolve( _app.rootPath + '/' + _app.script ) ],
 						options: [ ],
 						autoRestart: _app.restart,
-						restartTimeout: 500,
+						restartTimeout: 2500,
 						// Callback when the process is Auto-restarted
 						cbRestart: function ( data ) {
 							$logger.info( 'restarting "' + app.name + '"' )
@@ -45,7 +45,7 @@ module.exports = function ( options ) {
 						},
 						//  On Exit
 						cbClose: function ( exitCode ) {
-							$logger.warn( '"'+app.name+'"" existed, exitcode: ' + exitCode );
+							$logger.warn( '"' + app.name + '"" existed, exitcode: ' + exitCode );
 						}
 					} );
 					//	add to cache
@@ -88,12 +88,14 @@ module.exports = function ( options ) {
 		_.each( $this.apps, function ( app ) {
 			$logger.debug( '"' + app.appName + '" starting...' );
 			//	start app by name
-			$this.processes[ app.appName ].start( function ( procPID ) {
-				$this.processes[ app.appName ].status = 'running';
-				$this.processes[ app.appName ].pid = procPID;
-				$this.processes[ app.appName ].name= app.appName;
-				$logger.info( '"' + app.appName + '" started, pid: '+procPID );
-			} );
+			if ( $this.processes[ app.appName ].status !== 'running' ) {
+				$this.processes[ app.appName ].start( function ( procPID ) {
+					$this.processes[ app.appName ].status = 'running';
+					$this.processes[ app.appName ].pid = procPID;
+					$this.processes[ app.appName ].name = app.appName;
+					$logger.info( '"' + app.appName + '" started, pid: ' + procPID );
+				} );
+			}
 		} );
 	};
 	/**
@@ -103,7 +105,7 @@ module.exports = function ( options ) {
 	 *
 	 * @return {Function}
 	 */
-	$this.stopAll = function ( ) {
+	$this.stopAll = function ( callback ) {
 		$logger.debug( 'stopping managed apps...' );
 		_.each( $this.apps, function ( app ) {
 			//	stop app by name
@@ -112,6 +114,11 @@ module.exports = function ( options ) {
 			$this.processes[ app.appName ].pid = null;
 			$logger.info( '"' + app.appName + '" stopping...' );
 		} );
+		if ( callback ) {
+			setTimeout( function ( ) {
+				callback( );
+			}, 1000 );
+		}
 	};
 	/**
 	 * restart all configured apps
@@ -122,16 +129,22 @@ module.exports = function ( options ) {
 	 */
 	$this.restartAll = function ( ) {
 		$logger.info( 'Restarting managed apps' );
-		$this.stopAll();
+		$this.stopAll( );
 		_.each( $this.apps, function ( app ) {
-			//	start app by name
-			$this.processes[ app.appName ].start( function ( procPID ) {
-				$this.processes[ app.appName ].status = 'running';
-				$this.processes[ app.appName ].pid = procPID;
-				$this.processes[ app.appName ].name= app.appName;
-				$logger.info( '"' + app.appName + '" started, pid: '+procPID );
-			} );
-			$logger.info( '"' + app.appName + '" restarting...' );
+			setTimeout( function ( ) {
+				if ( $this.processes[ app.appName ].status !== 'running' ) {
+					$logger.info( '"' + app.appName + '" restarting...' );
+					//	start app by name
+					$this.processes[ app.appName ].start( function ( procPID ) {
+						$this.processes[ app.appName ].status = 'running';
+						$this.processes[ app.appName ].pid = procPID;
+						$this.processes[ app.appName ].name = app.appName;
+						$logger.info( '"' + app.appName + '" started, pid: ' + procPID );
+					} );
+				} else {
+					$logger.info( '"' + app.appName + '" already running' );
+				}
+			}, 500 );
 		} );
 	};
 	/**
@@ -147,12 +160,16 @@ module.exports = function ( options ) {
 		if ( appName ) {
 			var handler = $this.processes[ appName ];
 			if ( handler ) {
-				$logger.info( '"' + appName + '" starting...' );
-				handler.start( function ( procPID ) {
-					handler.status = 'running';
-					handler.pid = procPID;
-					$logger.info( '"' + app.appName + '" started, pid: '+procPID );
-				} );
+				if ( handler.status !== 'running' ) {
+					$logger.info( '"' + appName + '" starting...' );
+					handler.start( function ( procPID ) {
+						handler.status = 'running';
+						handler.pid = procPID;
+						$logger.info( '"' + app.appName + '" started, pid: ' + procPID );
+					} );
+				} else {
+					$logger.info( '"' + app.appName + '" already running' );
+				}
 			}
 		}
 	};
@@ -171,7 +188,7 @@ module.exports = function ( options ) {
 			if ( handler ) {
 				handler.stop( );
 				handler.status = 'stopped';
-					handler.pid = null;
+				handler.pid = null;
 				$logger.info( '"' + appName + '" stopping...' );
 			}
 		}

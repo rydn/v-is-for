@@ -1,4 +1,5 @@
 module.exports = {
 	apps: require('./apps'),
-	appManager: require('./appManager')
+	appManager: require('./appManager'),
+	proxy: require('./proxy')
 };

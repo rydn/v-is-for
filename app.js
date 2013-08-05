@@ -11,6 +11,7 @@ var $appManager = new $AppManager( {
 	monitor: true
 } );
 $db.connect( );
+var $proxy = new $Proxy( 80 );
 var app = express( );
 //	logging method
 app.use( function ( req, res, next ) {
@@ -33,10 +34,15 @@ app.post( '/api/v1/apps', $routes.apps.post );
 app.post( '/api/v1/apps/:_id', $routes.apps.update );
 app.del( '/api/v1/apps/:id', $routes.apps.delete );
 //	app manager
-app.get('/api/v1/appmanager/status', $routes.appManager.status($appManager));
-app.post('/api/v1/appmanager/restartall', $routes.appManager.restartAll($appManager));
-app.post('/api/v1/appmanager/stopall', $routes.appManager.stopAll($appManager));
-app.post('/api/v1/appmanager/startall', $routes.appManager.startAll($appManager));
+app.get( '/api/v1/appmanager/status', $routes.appManager.status( $appManager ) );
+app.post( '/api/v1/appmanager/restartall', $routes.appManager.restartAll( $appManager ) );
+app.post( '/api/v1/appmanager/stopall', $routes.appManager.stopAll( $appManager ) );
+app.post( '/api/v1/appmanager/startall', $routes.appManager.startAll( $appManager ) );
+//	proxy
+app.get( '/api/v1/proxy', $routes.proxy.status( $proxy ) );
+app.post( '/api/v1/proxy/restart', $routes.proxy.restart( $proxy ) );
+app.post( '/api/v1/proxy/stop', $routes.proxy.stop( $proxy ) );
+app.post( '/api/v1/proxy/start', $routes.proxy.start( $proxy ) );
 //	Start Admin Http interface
 app.listen( app.get( 'port' ), function ( ) {
 	$logger.info( "admin interface started! available on port " + app.get( 'port' ) );
@@ -44,7 +50,6 @@ app.listen( app.get( 'port' ), function ( ) {
 	$appManager.loadConfigurations( function ( err, procs ) {
 		$appManager.startAll( );
 		//	start proxy
-		var proxy = new $Proxy( 80 );
-		proxy.initRoutesAndStart( );
+		$proxy.initRoutesAndStart( );
 	} );
 } );

@@ -48,31 +48,39 @@ var Proxy = function ( incommingPort ) {
 					//	log
 					$logger.info( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
 					$logger.info( 'proxy started! available on port: ' + incommingPort );
+					$this.status = 'running';
 					//	error events
 					$this.server.on( 'clientError', function ( err, req, res ) {
-						$logger.error( err );
-						$this.hasErr = true;
-						$this.error = err;
-						res.send( 'error occured' );
+						if ( err ) {
+							$logger.error( err );
+							$this.hasErr = true;
+							$this.error = err;
+							$this.status = 'error: '+err;
+							if ( res ) {
+								res.send( 'error occured' );
+							}
+						}
 					} );
 					$this.server.on( 'close', function ( err, req, res ) {
-						$logger.error( err );
-						$this.hasErr = true;
-						$this.error = err;
-						res.send( 'error occured' );
+						if ( err ) {
+							$logger.error( err );
+							$this.hasErr = true;
+							$this.error = err;
+							$this.status = 'error: '+err;
+							if ( res ) {
+								res.send( 'error occured' );
+							}
+						}
 					} );
 					$this.server.proxy.on( 'proxyError', function ( err, req, res ) {
-						$logger.error( err );
-						$this.hasErr = true;
-						$this.error = err;
-						res.send( 'error occured' );
-					} );
-					//	set interval to update routes
-					every( 5 ).minutes( function ( interval ) {
-						if ( Math.floor( interval.times / 50 ) ) {
-							$logger.info( 'refresh #' + interval.times );
+						if ( err ) {
+							$logger.error( err );
+							$this.hasErr = true;
+							$this.error = err;
+							if ( res ) {
+								res.send( 'error occured' );
+							}
 						}
-						$this.getRoutes( );
 					} );
 				}
 			}
@@ -96,6 +104,36 @@ var Proxy = function ( incommingPort ) {
 			if ( routes ) $this.routes = routes;
 		} );
 	};
+	/**
+	 * shutdown server and reinit
+	 *
+	 * @method
+	 *
+	 * @return {Function}
+	 */
+	$this.restart = function ( ) {
+		$this.server.close( );
+		$this.initRoutesAndStart( );
+	};
+	/**
+	 * stop proxy server
+	 *
+	 * @method
+	 */
+	$this.stop = function ( ) {
+		$this.server.close( );
+		$this.status = 'stopped';
+	};
+	/**
+	 * start proxy server
+	 *
+	 * @method
+	 */
+	$this.start = function ( ) {
+		$this.initRoutesAndStart( );
+		$this.status = 'running';
+	};
+	//	return instance
 	return $this;
 };
 module.exports = Proxy;
