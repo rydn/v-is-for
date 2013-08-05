@@ -45,12 +45,17 @@ module.exports = function ( userOptions ) {
 	obj.restart = function ( cb, termSignal ) {
 		// Stop
 		obj.stop( function ( ) {
+			obj._status = 'stopped';
 			// Wait and start again
 			setTimeout( function ( ) {
 				obj.start( );
+				obj._status = 'started';
 				if ( cb ) cb( );
 			}, options.restartTimeout );
 		}, termSignal );
+	}
+	obj.status = function(){
+		return obj._status;
 	}
 	return obj;
 }

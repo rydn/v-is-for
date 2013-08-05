@@ -6,7 +6,23 @@ angular.module( 'vIsForVirtualApp' )
 			id: '@_id'
 		} );
 		//	get apps
-		$scope.apps = Apps.query( );
+		$http.get('/api/v1/apps' ).success( function ( apps)  {
+			
+			//	get statuses
+			$http.get( '/api/v1/appmanager/status' ).success( function ( statuses ) {
+				$rootScope.statuses = statuses;
+				var completeApps = [];
+				for ( var i = apps.length - 1; i >= 0; i-- ) {
+					var app = apps[ i ];
+					console.log(app)
+					app.status = statuses[ i ].status;
+					app.pid = statuses[ i ].pid;
+					completeApps.push(app);
+				};
+				$rootScope.apps = completeApps;
+			} );
+
+		} );
 		//	save method
 		$scope.save = function ( ) {
 			$( '#save' ).text( 'working' ).attr( 'disabled', true );
@@ -14,7 +30,10 @@ angular.module( 'vIsForVirtualApp' )
 			var newHost = new Apps( {
 				name: $scope.inputAppName,
 				domain: $scope.inputDomain,
-				target: $scope.inputTarget
+				target: $scope.inputTarget,
+				processType: $scope.inputRuntime,
+				entryPoint: $scope.inputEntry,
+				rootPath: $scope.inputPath
 			} );
 			//	clear controls
 			$scope.inputTarget = null;
@@ -23,7 +42,7 @@ angular.module( 'vIsForVirtualApp' )
 			//	save to db
 			newHost.$save( function ( result ) {
 				if ( result ) {
-					$scope.apps = Apps.query( );
+					$rootScope.apps = Apps.query( );
 					$rootScope.alertTitle = 'Huraahhh!';
 					$rootScope.alertBody = 'your new app added!';
 					$( '#save' ).text( 'Create' ).removeAttr( 'disabled' );
@@ -43,7 +62,7 @@ angular.module( 'vIsForVirtualApp' )
 			} );
 			console.log( that );
 			//	update view
-			$scope.apps = Apps.query( );
+			$rootScope.apps = Apps.query( );
 		};
 		//	update
 		$scope.updateApp = function ( attr, value, _id ) {
@@ -51,7 +70,8 @@ angular.module( 'vIsForVirtualApp' )
 				param: attr,
 				value: value
 			} ).success( function ( response ) {
-				console.log( response );
+				//	update view
+				$rootScope.apps = Apps.query( );
 			} );
 		};
 	} );

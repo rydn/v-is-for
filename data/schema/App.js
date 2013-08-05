@@ -11,6 +11,21 @@ var $App = new mongoose.Schema( {
 	target: {
 		type: String,
 		required: true
+	},
+	processType: {
+		type: String,
+		default: 'node',
+		required: true
+	},
+	entryPoint: {
+		type: String,
+		default: 'app.js',
+		required: true
+	},
+	rootPath: {
+		type: String,
+		default: '/root/apps/app1/',
+		required: true
 	}
 } );
 module.exports = $App;

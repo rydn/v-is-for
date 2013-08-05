@@ -14,10 +14,7 @@ angular.module( 'vIsForVirtualApp', [ 'ngResource' ] )
 				templateUrl: 'views/confirmDelete.html',
 				controller: 'ConfirmDeleteCtrl'
 			} )
-			.when( '/apps/:_id', {
-				templateUrl: 'views/viewApp.html',
-				controller: 'ViewappCtrl'
-			} )
+			
 			.otherwise( {
 				redirectTo: '/'
 			} );

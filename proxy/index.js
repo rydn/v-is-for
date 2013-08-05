@@ -46,7 +46,7 @@ var Proxy = function ( incommingPort ) {
 					//	config
 					$this.server.httpAllowHalfOpen = true;
 					//	log
-					$logger.debug( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
+					$logger.info( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
 					$logger.info( 'proxy started! available on port: ' + incommingPort );
 					//	error events
 					$this.server.on( 'clientError', function ( err, req, res ) {
@@ -68,7 +68,7 @@ var Proxy = function ( incommingPort ) {
 						res.send( 'error occured' );
 					} );
 					//	set interval to update routes
-					every( 5 ).seconds( function ( interval ) {
+					every( 5 ).minutes( function ( interval ) {
 						if ( Math.floor( interval.times / 50 ) ) {
 							$logger.info( 'refresh #' + interval.times );
 						}
