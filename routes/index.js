@@ -1,3 +1,4 @@
 module.exports = {
-	apps: require('./apps')
+	apps: require('./apps'),
+	appManager: require('./appManager')
 };
