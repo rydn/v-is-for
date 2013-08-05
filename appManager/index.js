@@ -108,6 +108,8 @@ module.exports = function ( options ) {
 		_.each( $this.apps, function ( app ) {
 			//	stop app by name
 			$this.processes[ app.appName ].stop( );
+			$this.processes[ app.appName ].status = 'stopped';
+			$this.processes[ app.appName ].pid = null;
 			$logger.info( '"' + app.appName + '" stopping...' );
 		} );
 	};
@@ -120,6 +122,7 @@ module.exports = function ( options ) {
 	 */
 	$this.restartAll = function ( ) {
 		$logger.info( 'Restarting managed apps' );
+		$this.stopAll();
 		_.each( $this.apps, function ( app ) {
 			//	start app by name
 			$this.processes[ app.appName ].start( function ( procPID ) {
@@ -167,6 +170,8 @@ module.exports = function ( options ) {
 			var handler = $this.processes[ appName ];
 			if ( handler ) {
 				handler.stop( );
+				handler.status = 'stopped';
+					handler.pid = null;
 				$logger.info( '"' + appName + '" stopping...' );
 			}
 		}

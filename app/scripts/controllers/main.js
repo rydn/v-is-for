@@ -14,21 +14,24 @@ angular.module( 'vIsForVirtualApp' )
 			$( this ).tab( 'show' );
 		} );
 		//	get apps
-		$http.get( '/api/v1/apps' ).success( function ( apps ) {
-			//	get statuses
-			$http.get( '/api/v1/appmanager/status' ).success( function ( statuses ) {
-				$rootScope.statuses = statuses;
-				var completeApps = [ ];
-				for ( var i = apps.length - 1; i >= 0; i-- ) {
-					var app = apps[ i ];
-					console.log( app )
-					app.status = statuses[ i ].status;
-					app.pid = statuses[ i ].pid;
-					completeApps.push( app );
-				};
-				$rootScope.apps = completeApps;
+		var getApps = function ( ) {
+			$http.get( '/api/v1/apps' ).success( function ( apps ) {
+				//	get statuses
+				$http.get( '/api/v1/appmanager/status' ).success( function ( statuses ) {
+					$rootScope.statuses = statuses;
+					var completeApps = [ ];
+					for ( var i = apps.length - 1; i >= 0; i-- ) {
+						var app = apps[ i ];
+						console.log( app )
+						app.status = statuses[ i ].status;
+						app.pid = statuses[ i ].pid;
+						completeApps.push( app );
+					};
+					$rootScope.apps = completeApps;
+				} );
 			} );
-		} );
+		};
+		getApps( );
 		//////////////////////
 		//	SCOPE METHODS //
 		//////////////////////
@@ -51,7 +54,7 @@ angular.module( 'vIsForVirtualApp' )
 			//	save to db
 			newHost.$save( function ( result ) {
 				if ( result ) {
-					$rootScope.apps = Apps.query( );
+					getApps( );
 					$rootScope.alertTitle = 'Huraahhh!';
 					$rootScope.alertBody = 'your new app added!';
 					$( '#save' ).text( 'Create' ).removeAttr( 'disabled' );
@@ -65,13 +68,12 @@ angular.module( 'vIsForVirtualApp' )
 		};
 		//	delete method
 		$scope.delete = function ( _id ) {
-			console.log( _id );
 			var that = Apps.delete( {
 				_id: _id
 			} );
 			console.log( that );
 			//	update view
-			$rootScope.apps = Apps.query( );
+			getApps( );
 		};
 		//	update
 		$scope.updateApp = function ( attr, value, _id ) {
@@ -80,7 +82,25 @@ angular.module( 'vIsForVirtualApp' )
 				value: value
 			} ).success( function ( response ) {
 				//	update view
-				$rootScope.apps = Apps.query( );
+				getApps( );
+			} );
+		};
+		//////////////////////////////////
+		//	Global action controllers //
+		//////////////////////////////////
+		$rootScope.startAll = function ( ) {
+			$http.post( '/api/v1/appmanager/startall' ).success( function ( response ) {
+				getApps( );
+			} );
+		};
+		$rootScope.stopAll = function ( ) {
+			$http.post( '/api/v1/appmanager/stopall' ).success( function ( response ) {
+				getApps( );
+			} );
+		};
+		$rootScope.restartAll = function ( ) {
+			$http.post( '/api/v1/appmanager/restartall' ).success( function ( response ) {
+				getApps( );
 			} );
 		};
 	} );
