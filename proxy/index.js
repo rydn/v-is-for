@@ -1,17 +1,17 @@
 //	dependencies
-var httpProxy = require( 'http-proxy' ),
-	every = require( 'fluent-time' ).every,
-	_ = require( 'lodash' );
+var httpProxy = require('http-proxy'),
+	every = require('fluent-time').every,
+	_ = require('lodash');
 //	modules
-var $logger = require( '../lib/logger' ),
-	$DB = require( '../data/' );
-var $db = new $DB( );
-$db.connect( );
+var $logger = require('../lib/logger'),
+	$DB = require('../data/');
+var $db = new $DB();
+$db.connect();
 /**
  * main proxy interface
  * @param  {Number} incommingPort
  */
-var Proxy = function ( incommingPort ) {
+var Proxy = function(incommingPort ) {
 	var $this = this;
 	//	set proxys port
 	$this.incommingPort = incommingPort || 80;
@@ -21,17 +21,17 @@ var Proxy = function ( incommingPort ) {
 	 * start proxy with config pulled from db and transformed
 	 * @return {Function}
 	 */
-	$this.initRoutesAndStart = function ( ) {
+	$this.initRoutesAndStart = function() {
 		//	get app configs from db
-		$db.App.find( function ( err, $apps ) {
-			if ( err ) $logger.error( err );
+		$db.App.find(function(err, $apps ) {
+			if (err) $logger.error(err);
 			else {
 				//	map returned object as domain:target hash
 				var routes = {};
-				_.each( $apps, function ( $app ) {
-					routes[ $app.domain ] = $app.target;
-				} );
-				if ( routes ) {
+				_.each($apps, function($app ) {
+					routes[$app.domain] = $app.target;
+				});
+				if (routes) {
 					//	routes
 					$this.routes = routes;
 					var _config = {
@@ -40,51 +40,51 @@ var Proxy = function ( incommingPort ) {
 						router: $this.routes
 					};
 					//	start server with instrumentation and handler(which we pass routes to) on incommingPort
-					$this.server = httpProxy.createServer( require( './instrument' )( ), require( './handler' )( function ( ) {
+					$this.server = httpProxy.createServer(require('./instrument')(), require('./handler')(function() {
 						return $this.routes;
-					} ) ).listen( $this.incommingPort );
+					})).listen($this.incommingPort);
 					//	config
 					$this.server.httpAllowHalfOpen = true;
 					//	log
-					$logger.info( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
-					$logger.info( 'proxy started! available on port: ' + incommingPort );
+					$logger.info('proxy routes set as: ' + JSON.stringify($this.routes));
+					$logger.info('proxy started! available on port: ' + incommingPort);
 					$this.status = 'running';
 					//	error events
-					$this.server.on( 'clientError', function ( err, req, res ) {
-						if ( err ) {
-							$logger.error( err );
+					$this.server.on('clientError', function(err, req, res ) {
+						if (err) {
+							$logger.error(err);
 							$this.hasErr = true;
 							$this.error = err;
-							$this.status = 'error: '+err;
-							if ( res ) {
-								res.send( 'error occured' );
+							$this.status = 'error: ' + err;
+							if (res) {
+								res.send('error occured');
 							}
 						}
-					} );
-					$this.server.on( 'close', function ( err, req, res ) {
-						if ( err ) {
-							$logger.error( err );
+					});
+					$this.server.on('close', function(err, req, res ) {
+						if (err) {
+							$logger.error(err);
 							$this.hasErr = true;
 							$this.error = err;
-							$this.status = 'error: '+err;
-							if ( res ) {
-								res.send( 'error occured' );
+							$this.status = 'error: ' + err;
+							if (res) {
+								res.send('error occured');
 							}
 						}
-					} );
-					$this.server.proxy.on( 'proxyError', function ( err, req, res ) {
-						if ( err ) {
-							$logger.error( err );
+					});
+					$this.server.proxy.on('proxyError', function(err, req, res ) {
+						if (err) {
+							$logger.error(err);
 							$this.hasErr = true;
 							$this.error = err;
-							if ( res ) {
-								res.send( 'error occured' );
+							if (res) {
+								res.send('error occured');
 							}
 						}
-					} );
+					});
 				}
 			}
-		} );
+		});
 	};
 	/**
 	 * update routes
@@ -93,16 +93,16 @@ var Proxy = function ( incommingPort ) {
 	 *
 	 * @return {Null}
 	 */
-	$this.getRoutes = function ( ) {
+	$this.getRoutes = function() {
 		//	get app configs from db
-		$db.App.find( function ( err, $apps ) {
+		$db.App.find(function(err, $apps ) {
 			//	map returned object as domain:target hash
 			var routes = {};
-			_.each( $apps, function ( $app ) {
-				routes[ $app.domain ] = $app.target;
-			} );
-			if ( routes ) $this.routes = routes;
-		} );
+			_.each($apps, function($app ) {
+				routes[$app.domain] = $app.target;
+			});
+			if (routes) $this.routes = routes;
+		});
 	};
 	/**
 	 * shutdown server and reinit
@@ -111,17 +111,17 @@ var Proxy = function ( incommingPort ) {
 	 *
 	 * @return {Function}
 	 */
-	$this.restart = function ( ) {
-		$this.server.close( );
-		$this.initRoutesAndStart( );
+	$this.restart = function() {
+		$this.server.close();
+		$this.initRoutesAndStart();
 	};
 	/**
 	 * stop proxy server
 	 *
 	 * @method
 	 */
-	$this.stop = function ( ) {
-		$this.server.close( );
+	$this.stop = function() {
+		$this.server.close();
 		$this.status = 'stopped';
 	};
 	/**
@@ -129,8 +129,8 @@ var Proxy = function ( incommingPort ) {
 	 *
 	 * @method
 	 */
-	$this.start = function ( ) {
-		$this.initRoutesAndStart( );
+	$this.start = function() {
+		$this.initRoutesAndStart();
 		$this.status = 'running';
 	};
 	//	return instance

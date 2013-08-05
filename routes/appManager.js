@@ -1,6 +1,6 @@
-var _ = require( 'lodash' ),
+var _ = require('lodash'),
 	//	modules
-	$logger = require( '../lib/logger' );
+	$logger = require('../lib/logger');
 //	App Manager Routes
 module.exports = {
 	/**
@@ -12,7 +12,7 @@ module.exports = {
 	 *
 	 * @return {[type]}
 	 */
-	restartAll: function ( $appManager ) {
+	restartAll: function($appManager ) {
 		var $this = this;
 		$this.$appManager = $appManager;
 		/**
@@ -25,11 +25,11 @@ module.exports = {
 		 *
 		 * @return {Function}
 		 */
-		return function ( req, res ) {
-			$this.$appManager.restartAll( );
-			res.json( {
+		return function(req, res ) {
+			$this.$appManager.restartAll();
+			res.json({
 				result: 'processes restarting'
-			} );
+			});
 		};
 	},
 	/**
@@ -41,7 +41,7 @@ module.exports = {
 	 *
 	 * @return {[type]}
 	 */
-	stopAll: function ( $appManager ) {
+	stopAll: function($appManager ) {
 		var $this = this;
 		$this.$appManager = $appManager;
 		/**
@@ -54,11 +54,11 @@ module.exports = {
 		 *
 		 * @return {Function}
 		 */
-		return function ( req, res ) {
-			$this.$appManager.stopAll( );
-			res.json( {
+		return function(req, res ) {
+			$this.$appManager.stopAll();
+			res.json({
 				result: 'processes stopping'
-			} );
+			});
 		};
 	},
 	/**
@@ -70,7 +70,7 @@ module.exports = {
 	 *
 	 * @return {[type]}
 	 */
-	startAll: function ( $appManager ) {
+	startAll: function($appManager ) {
 		var $this = this;
 		$this.$appManager = $appManager;
 		/**
@@ -83,11 +83,11 @@ module.exports = {
 		 *
 		 * @return {Function}
 		 */
-		return function ( req, res ) {
-			$this.$appManager.startAll( );
-			res.json( {
+		return function(req, res ) {
+			$this.$appManager.startAll();
+			res.json({
 				result: 'processes starting'
-			} );
+			});
 		};
 	},
 	/**
@@ -99,7 +99,7 @@ module.exports = {
 	 *
 	 * @return {Function}
 	 */
-	status: function ( $appManager ) {
+	status: function($appManager ) {
 		var $this = this;
 		$this.$appManager = $appManager;
 		/**
@@ -112,13 +112,13 @@ module.exports = {
 		 *
 		 * @return {Function}
 		 */
-		return function ( req, res ) {
-			var statuses = [ ];
-			_.each( $this.$appManager.apps, function ( app ) {
-				var proc = $this.$appManager.processes[ app.appName ];
-				statuses.push( proc );
-			} );
-			res.json( statuses );
+		return function(req, res ) {
+			var statuses = [];
+			_.each($this.$appManager.apps, function(app ) {
+				var proc = $this.$appManager.processes[app.appName];
+				statuses.push(proc);
+			});
+			res.json(statuses);
 		};
 	}
 };

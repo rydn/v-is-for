@@ -1,4 +1,4 @@
-var app = angular.module( 'vIsForVirtualApp');
+var app = angular.module('vIsForVirtualApp');
 // On esc event
 app.directive('onEsc', function() {
   return function(scope, elm, attr) {
@@ -31,11 +31,11 @@ app.directive('inlineEdit', function($timeout) {
     },
     link: function(scope, elm, attr) {
       var previousValue;
-      
+
       scope.edit = function() {
         scope.editMode = true;
         previousValue = scope.model;
-        
+
         $timeout(function() {
           elm.find('input')[0].focus();
         }, 0, false);
