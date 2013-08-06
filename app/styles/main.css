@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900,700italic,500italic,400italic,300italic,900italic);
-body{
+*{
 	font-family: 'Roboto', sans-serif;
 	text-height: 13px;
 }
@@ -31,8 +31,23 @@ body{
 }
 .kpi
 {
+	color: #606060;
+	font-style: italic;
 	border-top: 1px solid #e3e3e3;
 	text-align: center;
 	font-size:12px;
 	font-weight: normal;
+}
+/* Possible Fix */
+.module > *:last-child,
+.module > *:last-child > *:last-child,
+.module > *:last-child > *:last-child > *:last-child {
+  margin: 0;
+}
+
+.module {
+  width: 20rem;
+  padding: 0.25rem;
+  margin: 0.25rem auto;
+  background: white;
 }

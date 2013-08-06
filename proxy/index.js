@@ -17,6 +17,8 @@ var Proxy = function(incommingPort ) {
 	$this.incommingPort = incommingPort || 80;
 	$this.hasErr = false;
 	$this.error = '';
+	//	get stats from instrumentation
+	$this.stats = require('./instrument').stats;
 	/**
 	 * start proxy with config pulled from db and transformed
 	 * @return {Function}
@@ -39,10 +41,16 @@ var Proxy = function(incommingPort ) {
 						maxSockets: 500,
 						router: $this.routes
 					};
+					var instrument = require('./instrument');
+
 					//	start server with instrumentation and handler(which we pass routes to) on incommingPort
-					$this.server = httpProxy.createServer(require('./instrument')(), require('./handler')(function() {
+					$this.server = httpProxy.createServer(instrument.middleware(), require('./handler')(function() {
 						return $this.routes;
 					})).listen($this.incommingPort);
+
+					//	expose stats methods
+					$this.stats = instrument.stats;
+					$this.getStats = instrument.getStats;
 					//	config
 					$this.server.httpAllowHalfOpen = true;
 					//	log

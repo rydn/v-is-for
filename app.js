@@ -38,7 +38,8 @@ app.post( '/api/v1/appmanager/restartall', $routes.appManager.restartAll( $appMa
 app.post( '/api/v1/appmanager/stopall', $routes.appManager.stopAll( $appManager ) );
 app.post( '/api/v1/appmanager/startall', $routes.appManager.startAll( $appManager ) );
 //	proxy
-app.get( '/api/v1/proxy', $routes.proxy.status( $proxy ) );
+app.get( '/api/v1/proxy/status', $routes.proxy.status( $proxy ) );
+app.get( '/api/v1/proxy/hits', $routes.proxy.hits( $proxy ) );
 app.post( '/api/v1/proxy/restart', $routes.proxy.restart( $proxy ) );
 app.post( '/api/v1/proxy/stop', $routes.proxy.stop( $proxy ) );
 app.post( '/api/v1/proxy/start', $routes.proxy.start( $proxy ) );
