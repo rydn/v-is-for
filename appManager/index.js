@@ -1,5 +1,6 @@
 var path = require( 'path' ),
 	_ = require( 'lodash' ),
+	fs = require( 'fs' ),
 	$DB = require( '../data/' ),
 	$logger = require( '../lib/logger' );
 //apacheTail.start( );
@@ -35,9 +36,18 @@ module.exports = function ( options ) {
 						cbRestart: function ( data ) {
 							$logger.info( 'restarting "' + app.name + '"' );
 						},
-						// //  On Output
+						//   On Output
 						cbStdout: function ( data ) {
-							console.log( data.toString( ) );
+							fs.exists( path.resolve( '../logs/' + app.name + '.stdout' ), function ( exists ) {
+								if ( exists ) {
+									//	log to file
+									fs.writeFile( path.resolve( '../logs/' + app.name + '.stdout' ), data.toString( ), function ( err ) {
+										if ( err ) {
+											$logger.error( err );
+										}
+									} );
+								}
+							} );
 						},
 						//  On Error
 						cbStderr: function ( data ) {

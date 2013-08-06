@@ -32,7 +32,7 @@ module.exports = function ( $Routes ) {
 			};
 			//	seperate hostname and port
 			pathO.port = Number( pathO.hostname.substring( pathO.hostname.indexOf( ':' ) + 1, pathO.hostname.length ) );
-			pathO.hostname = pathO.hostname.substring( 0, pathO.hostname.indexOf( ':' ) );
+			pathO.hostname = req.headers.host.split( ':' )[ 0 ];
 			//	if port and host are present proxy the request
 			if ( ( pathO.port ) && ( pathO.hostname ) ) {
 				proxy.proxyRequest( req, res, {
@@ -41,12 +41,14 @@ module.exports = function ( $Routes ) {
 					buffer: buffer
 				} );
 			} else {
-				$logger.error( pathO + ' incomplete' );
-				res.send( 'an error occured' );
+				$logger.error( JSON.stringify( pathO ) + ' incomplete' );
+				res.writeHead( 503 );
+				res.end( );
 			}
 		} else {
 			$logger.debug( 'unknown route requested, host: ' + req.headers.host );
-			res.send( 404 );
+			res.writeHead( 404 );
+			res.end( );
 		}
 	};
 };

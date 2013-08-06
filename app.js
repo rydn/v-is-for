@@ -1,9 +1,3 @@
-//	Strong Agent/NodeFly
-var hostname = require( 'os' ).hostname( );
-var processNumber = process.env.INDEX_OF_PROCESS || 0;
-require( 'strong-agent' ).profile(
-	'd2213c7b-c980-444e-9ffa-6388d27751fb', [ 'v-is-for', hostname, processNumber ]
-);
 var express = require( "express" ),
 	$logger = require( './lib/logger' ),
 	$Proxy = require( './proxy/' ),

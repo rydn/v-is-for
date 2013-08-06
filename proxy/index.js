@@ -72,7 +72,6 @@ var Proxy = function ( incommingPort ) {
 							$this.error = err;
 							$this.status = 'error: ' + err;
 						}
-						res.end( );
 					} );
 					$this.server.proxy.on( 'proxyError', function ( err, req, res ) {
 						// if ( err ) {

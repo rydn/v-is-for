@@ -60,7 +60,29 @@ module.exports = {
 						if ( err ) $logger.error( err );
 						else {
 							var paramName = _set.replace( 'stats:', '' );
-							returnO[ paramName ] = Number( members[ 1 ] );
+							switch ( paramName ) {
+							case 'hits':
+								returnO[ paramName ] = members[ 1 ];
+								break;
+							case 'persite':
+								if ( members.length >= 2 ) {
+									returnO[ paramName ] = [ ];
+									var i = 0;
+									while ( i <= members.length ) {
+										if ( members[ i + 1 ] ) {
+											returnO[ paramName ].push( {
+												domain: members[ i ],
+												hits: members[ i + 1 ]
+											} );
+										}
+										i = i + 2;
+									}
+								}
+								break;
+							default:
+								returnO[ paramName ] = members;
+								break;
+							}
 							if ( count >= requiredLength ) {
 								callback( returnO );
 							}
@@ -76,7 +98,7 @@ module.exports = {
 				metrics.allRequestsPerSecond[ p ] = Math.round( metrics.allRequestsPerSecond[ p ] * 100 ) / 100;
 			} );
 			//	define sets to return
-			var sets = [ 'stats:ip', 'stats:user-agent', 'stats:persite', 'stats:hits' ];
+			var sets = [ 'stats:persite', 'stats:hits' ];
 			//	calll private method
 			getTop5( sets, function ( statsReturn ) {
 				statsReturn.metrics = metrics;

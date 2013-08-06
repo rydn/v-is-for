@@ -20,7 +20,10 @@ exports.middleware = function ( ) {
 			db.zincrby( 'stats:hits', 1, 'hit' );
 			mstats.meter( 'knownAppRequestsPerSecond' ).mark( );
 			mstats.meter( 'allRequestsPerSecond' ).mark( );
+			next( );
+		} else {
+			res.writeHead( 503 );
+			res.end( );
 		}
-		next( );
 	};
 };
