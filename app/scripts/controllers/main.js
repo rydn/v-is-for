@@ -53,9 +53,11 @@ angular.module( 'vIsForVirtualApp' )
 				}
 			} );
 		};
-		var doFullRefresh = function ( hideAlert) {
-			if(!hideAlert){
-				$.bootstrapGrowl( 'refreshing...',{delay:500} );
+		var doFullRefresh = function ( hideAlert ) {
+			if ( !hideAlert ) {
+				$.bootstrapGrowl( 'refreshing...', {
+					delay: 500
+				} );
 			}
 			getApps( );
 			getProxyStatus( );
@@ -64,12 +66,12 @@ angular.module( 'vIsForVirtualApp' )
 		///////////////////
 		//	initialize //
 		///////////////////
-		doFullRefresh();
+		doFullRefresh( );
 		//	set to do a refresh every 20 seconds and hide the alert saying so
 		var every = FluentTime.every;
-		every(10).seconds(function(){
-			doFullRefresh(true);
-		});
+		every( 10 ).seconds( function ( ) {
+			doFullRefresh( true );
+		} );
 		//////////////////////
 		//	SCOPE METHODS //
 		//////////////////////

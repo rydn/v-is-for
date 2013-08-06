@@ -1,53 +1,44 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900,700italic,500italic,400italic,300italic,900italic);
-*{
-	font-family: 'Roboto', sans-serif;
-	text-height: 13px;
+ * {
+    font-family:'Roboto', sans-serif;
+    text-height: 13px;
 }
-.mainView{
+.mainView {
     margin-top: 55px;
 }
 /*Edit In Place**/
-.edit-in-place span {
-  cursor: pointer;
+ .edit-in-place span {
+    cursor: pointer;
 }
-
 .edit-in-place input {
-  display: none;
+    display: none;
 }
-
 .edit-in-place.active span {
-  display: none;
+    display: none;
 }
-
 .edit-in-place.active input {
-  display: inline-block;
+    display: inline-block;
 }
-
 .stat {
-	text-align: center;
-	font-size:12px;
-	font-weight: bold;
-
+    text-align: center;
+    font-size:12px;
+    font-weight: bold;
 }
-.kpi
-{
-	color: #606060;
-	font-style: italic;
-	border-top: 1px solid #e3e3e3;
-	text-align: center;
-	font-size:12px;
-	font-weight: normal;
+.kpi {
+    color: #606060;
+    font-style: italic;
+    border-top: 1px solid #e3e3e3;
+    text-align: center;
+    font-size:12px;
+    font-weight: normal;
 }
 /* Possible Fix */
-.module > *:last-child,
-.module > *:last-child > *:last-child,
-.module > *:last-child > *:last-child > *:last-child {
-  margin: 0;
+ .module > *:last-child, .module > *:last-child > *:last-child, .module > *:last-child > *:last-child > *:last-child {
+    margin: 0;
 }
-
 .module {
-  width: 20rem;
-  padding: 0.25rem;
-  margin: 0.25rem auto;
-  background: white;
+    width: 20rem;
+    padding: 0.25rem;
+    margin: 0.25rem auto;
+    background: white;
 }

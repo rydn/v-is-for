@@ -1,16 +1,18 @@
 <div ng-model="app" class="modal" id="deleteConfirm">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h4>Are You Sure You Want To Delete</h4>
-	</div>
-	<div class="modal-body">
-		<h5><strong>{{app.name}}</strong></h5>
-		<hr />
-		<blockquote>
-		<p>{{app.domain}} >> {{app.target}}</p>
-		</blockquote>
-	</div>
-	<div class="modal-footer">
-		<a ng-click="deleteApp()" class="btn btn-inverse">Delete</a>
-	</div>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h4>Are You Sure You Want To Delete</h4>
+    </div>
+    <div class="modal-body">
+        <h5>
+            <strong>{{app.name}}</strong>
+        </h5>
+        <hr />
+        <blockquote>
+            <p>{{app.domain}} >> {{app.target}}</p>
+        </blockquote>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="deleteApp()" class="btn btn-inverse">Delete</a>
+    </div>
 </div>

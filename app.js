@@ -1,3 +1,9 @@
+//	Strong Agent/NodeFly
+var hostname = require( 'os' ).hostname( );
+var processNumber = process.env.INDEX_OF_PROCESS || 0;
+require( 'strong-agent' ).profile(
+	'd2213c7b-c980-444e-9ffa-6388d27751fb', [ 'v-is-for', hostname, processNumber ]
+);
 var express = require( "express" ),
 	$logger = require( './lib/logger' ),
 	$Proxy = require( './proxy/' ),
@@ -12,11 +18,6 @@ var $appManager = new $AppManager( {
 $db.connect( );
 var $proxy = new $Proxy( 80 );
 var app = express( );
-//	logging method
-app.use( function ( req, res, next ) {
-	$logger.trace( '[http] ' + req.method + ' > ' + req.url );
-	next( );
-} );
 // Configuration
 app.configure( function ( ) {
 	app.set( 'port', process.env.PORT || 5000 );
@@ -24,6 +25,11 @@ app.configure( function ( ) {
 	app.use( express.methodOverride( ) );
 	app.use( express.static( __dirname + '/app' ) );
 	app.use( app.router );
+	//	logging method
+	app.use( function ( req, res, next ) {
+		$logger.trace( '[http] ' + req.method + ' > ' + req.url );
+		next( );
+	} );
 } );
 //	Admin http routes
 //	apps

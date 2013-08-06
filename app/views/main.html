@@ -192,9 +192,15 @@
             <h4>System Status</h4>
             <hr />
             <div class="row-fluid">
-                <div class="stat span4 module">Total Hits<div class="kpi" ng-bind="stats.hits"></div></div>
-                <div class="stat span4 module">Rate<div class="kpi" ng-bind="proxyMetrics.allRequestsPerSecond.currentRate"></div></div>
-                <div class="stat span4 module">Proxy Status<div class="kpi" ng-bind="proxyStatus"></div></div>
+                <div class="stat span4 module">Total Hits
+                    <div class="kpi" ng-bind="stats.hits"></div>
+                </div>
+                <div class="stat span4 module">1min Rate
+                    <div class="kpi" ng-bind="proxyMetrics.allRequestsPerSecond.1MinuteRate"></div>
+                </div>
+                <div class="stat span4 module">Proxy Status
+                    <div class="kpi" ng-bind="proxyStatus"></div>
+                </div>
             </div>
         </div>
     </div>

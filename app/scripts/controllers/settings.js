@@ -1,13 +1,13 @@
 'use strict';
-angular.module('vIsForVirtualApp')
-	.controller('SettingsCtrl', function($scope, $rootScope, $resource ) {
+angular.module( 'vIsForVirtualApp' )
+	.controller( 'SettingsCtrl', function ( $scope, $rootScope, $resource ) {
 		//	resources
-		var Config = $resource('/api/configs/:id', {
+		var Config = $resource( '/api/configs/:id', {
 			id: '@_id'
-		}, {});
+		}, {} );
 		//	save method
-		$scope.save = function() {
-			var newConfig = new Config({
+		$scope.save = function ( ) {
+			var newConfig = new Config( {
 				name: $scope.inputName,
 				port: $scope.inputPort,
 				failsToDown: $scope.inputFailsToDown,
@@ -17,14 +17,13 @@ angular.module('vIsForVirtualApp')
 				message503: $scope.inputMessage503,
 				logLevel: $scope.inputLogLevel,
 				logFile: $scope.inputLogFile
-			});
-			newConfig.$save(function(savedObject, responseHeaders ) {
-				console.log(savedObject, responseHeaders);
+			} );
+			newConfig.$save( function ( savedObject, responseHeaders ) {
+				console.log( savedObject, responseHeaders );
 				//	show alert
 				$rootScope.alertTitle = 'Huraaah!';
 				$rootScope.alertBody = 'Config Saved!';
-			});
-
+			} );
 			return this;
 		};
-	});
+	} );

@@ -1,21 +1,20 @@
 'use strict';
-angular.module('vIsForVirtualApp', ['ngResource'])
-	.config(function($routeProvider ) {
+angular.module( 'vIsForVirtualApp', [ 'ngResource' ] )
+	.config( function ( $routeProvider ) {
 		$routeProvider
-			.when('/', {
+			.when( '/', {
 				templateUrl: 'views/main.html',
 				controller: 'MainCtrl'
-			})
-			.when('/settings', {
+			} )
+			.when( '/settings', {
 				templateUrl: 'views/settings.html',
 				controller: 'SettingsCtrl'
-			})
-			.when('/apps/:_id/delete', {
+			} )
+			.when( '/apps/:_id/delete', {
 				templateUrl: 'views/confirmDelete.html',
 				controller: 'ConfirmDeleteCtrl'
-			})
-
-			.otherwise({
+			} )
+			.otherwise( {
 				redirectTo: '/'
-			});
-	});
+			} );
+	} );
