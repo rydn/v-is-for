@@ -3,20 +3,25 @@ var $DB = require( '../data/' ),
 var $db = new $DB( );
 module.exports = {
 	getAll: function ( req, res ) {
-		var skip = req.query.skip || 0;
-		var limit = req.query.limit || 20;
+		var skip = Number( req.query.skip ) || 0;
+		var limit = Number( req.query.limit ) || 15;
 		$db.Ping.find( ).skip( skip ).limit( limit ).exec( function ( err, pings ) {
 			if ( err ) {
 				logger.error( err );
 				res.end( 503 );
 			} else {
-				res.json( pings );
+				var retData = {
+					data: pings,
+					next: '/api/v1/pings?skip=' + ( skip + limit ),
+					prev: ( skip - limit ) >= 0 ? '/api/v1/pings?skip=' + ( skip - limit ) : '/api/v1/pings'
+				};
+				res.json( retData );
 			}
 		} );
 	},
 	getForSite: function ( req, res ) {
-		var skip = req.query.skip || 0;
-		var limit = req.query.limit || 20;
+		var skip = Number( req.query.skip ) || 0;
+		var limit = Number( req.query.limit ) || 15;
 		$db.Ping.find( {
 			url: 'http://' + req.params.site
 		} ).skip( skip ).limit( limit ).exec( function ( err, pings ) {
@@ -24,13 +29,18 @@ module.exports = {
 				logger.error( err );
 				res.end( 503 );
 			} else {
-				res.json( pings );
+				var retData = {
+					data: pings,
+					next: '/api/v1/pings/bysite/' + req.params.site + '?skip=' + ( skip + limit ),
+					prev: ( skip - limit ) >= 0 ? '/api/v1/pings/bysite/' + req.params.site + '?skip=' + ( skip - limit ) : '/api/v1/pings/bysite/' + req.params.site
+				};
+				res.json( retData );
 			}
 		} );
 	},
 	getForStatus: function ( req, res ) {
-		var skip = req.query.skip || 0;
-		var limit = req.query.limit || 20;
+		var skip = Number( req.query.skip ) || 0;
+		var limit = Number( req.query.limit ) || 15;
 		var requestedStatus = req.params.status;
 		$db.Ping.find( {
 			status: requestedStatus
@@ -39,13 +49,18 @@ module.exports = {
 				logger.error( err );
 				res.end( 503 );
 			} else {
-				res.json( pings );
+				var retData = {
+					data: pings,
+					next: '/api/v1/pings/bystatus/' + requestedStatus + '?skip=' + ( skip + limit ),
+					prev: ( skip - limit ) >= 0 ? '/api/v1/pings/bystatus/' + requestedStatus + '?skip=' + ( skip - limit ) : '/api/v1/pings/bystatus/' + requestedStatus
+				};
+				res.json( retData );
 			}
 		} );
 	},
 	getQuery: function ( req, res ) {
-		var skip = req.query.skip || 0;
-		var limit = req.query.limit || 20;
+		var skip = Number( req.query.skip ) || 0;
+		var limit = Number( req.query.limit ) || 15;
 		var requestedStatus = req.params.status;
 		var requestedSite = req.params.site;
 		$db.Ping.find( {
@@ -56,7 +71,12 @@ module.exports = {
 				logger.error( err );
 				res.end( 503 );
 			} else {
-				res.json( pings );
+				var retData = {
+					data: pings,
+					next: '/api/v1/pings/query/' + requestedSite + '/' + requestedStatus + '?skip=' + ( skip + limit ),
+					prev: ( skip - limit ) >= 0 ? '/api/v1/pings/query/' + requestedSite + '/' + requestedStatus + '?skip=' + ( skip - limit ) : '/api/v1/pings/query/' + requestedSite + '/' + requestedStatus + '/'
+				};
+				res.json( retData );
 			}
 		} );
 	},
@@ -73,7 +93,7 @@ module.exports = {
 					else if ( status == 'down' ) status_num = 0;
 					else status_num = -1;
 					returnA.push( {
-						url: property,
+						url: property.replace( 'http://', '' ),
 						status: status,
 						status_num: status_num
 					} );

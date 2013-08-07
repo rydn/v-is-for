@@ -58,3 +58,10 @@
     font-weight: 400;
     font-style: normal;
 }
+.tablelink{
+    color: #444;
+}
+.tablelink:hover{
+    color: #999;
+    text-decoration: none;
+}

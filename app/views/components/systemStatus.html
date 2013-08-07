@@ -15,7 +15,7 @@
             <div class="kpi" ng-bind="proxyStatus"></div>
         </div>
     </div>
-    <hr />
+    
     <h4>Application Hits</h4>
 
     <div class="row-fluid">
@@ -45,14 +45,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="status in pingStatus">
-                    <td ng-bind="status.url"></td>
+                    <td><span data-toggle="tooltip" title="view history"><a href="#/pings/{{status.url}}" class="tablelink" ng-bind="status.url"></td></span>
                     <td>
-                        <i class="icon-ok-circle" ng-show="status.status_num > 0"></i>
-                        <i class="icon-exclamation-sign" ng-show="status.status_num == 0"></i>
-                        <i class="icon-ban-circle" ng-show="status.status_num < 0"></i>&nbsp;{{status.status}}
+                        <span data-toggle="tooltip" title="{{status.status}}"><i class="icon-ok-circle" ng-show="status.status_num > '0'"></i></span>
+                        <span data-toggle="tooltip" title="{{status.status}}"><i class="icon-exclamation-sign" ng-show="status.status_num == '0'"></i></span>
+                        <span data-toggle="tooltip" title="{{status.status}}"><i class="icon-ban-circle" ng-show="status.status_num < '0'"></i>&nbsp;</span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    
 </div>
