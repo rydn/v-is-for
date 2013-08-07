@@ -1,0 +1,71 @@
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <fieldset>
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="AppName">Name</label>
+                <div class="controls">
+                    <input id="appName" name="AppName" type="text" placeholder="MyApp" class="input" ng-model="inputAppName" required="">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="domain">Domain</label>
+                <div class="controls">
+                    <input id="domain" name="domain" type="text" placeholder="myapp.domain.com" class="input" ng-model="inputDomain" required="">
+                    <p class="help-block">the domain you specify must point toward this host</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="target">Target</label>
+                <div class="controls">
+                    <input id="target" name="target" type="text" placeholder="localhost:3000" class="input" ng-model="inputTarget" required="">
+                    <p class="help-block">target hostname and port to proxy requests to</p>
+                </div>
+            </div>
+
+            <!-- select input-->
+            <div class="control-group">
+                <label class="control-label" for="appType">Runtime</label>
+                <div class="controls">
+                    <select id="appType">
+                        <option>Select Runtime</option>
+                        <option value='node'>Node</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="path">Project Path</label>
+                <div class="controls">
+                    <input id="path" name="path" type="text" placeholder="/root/apps/app1/" class="input" ng-model="inputPath" required="">
+                    <p class="help-block">path for the root of this apps project</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="entry">Entry Point</label>
+                <div class="controls">
+                    <input id="entry" name="target" type="text" placeholder="app.js" class="input" ng-model="inputEntry" required="">
+                    <p class="help-block">the script to run when booting application</p>
+                </div>
+            </div>
+
+            <hr />
+            <!-- Button (Double) -->
+            <div class="control-group">
+                <label class="control-label" for="save"></label>
+                <div class="controls">
+                    <button id="save" name="save" ng-click="save()" class="btn btn-inverse pull-right">Create</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>

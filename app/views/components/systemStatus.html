@@ -1,0 +1,37 @@
+<div class="well well-small" style="height: 555px;">
+    <h4>System Status</h4>
+
+    <div class="row-fluid">
+        <div class="stat span4 module">
+            <h1>Total Hits</h1>
+            <div class="kpi" ng-bind="stats.hits"></div>
+        </div>
+        <div class="stat span4 module">
+            <h1>1min Rate</h1>
+            <div class="kpi" ng-bind="proxyMetrics.allRequestsPerSecond.1MinuteRate"></div>
+        </div>
+        <div class="stat span4 module">
+            <h1>Proxy Status</h1>
+            <div class="kpi" ng-bind="proxyStatus"></div>
+        </div>
+    </div>
+    <hr />
+    <h4>Application Hits</h4>
+
+    <div class="row-fluid">
+        <table class="table table-condensed">
+            <thead>
+                <tr style="font-size:11px; text-align: center;">
+                    <th>Domain</th>
+                    <th># Hits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="appstat in stats.persite">
+                    <td ng-bind="appstat.domain"></td>
+                    <td ng-bind="appstat.hits"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

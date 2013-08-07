@@ -1,0 +1,98 @@
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <fieldset>
+
+
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="name">Config Name</label>
+                <div class="controls">
+                    <input id="name" name="name" type="text" placeholder="myApp" class="input-xlarge" ng-model="inputName" require="">
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="port">port</label>
+                <div class="controls">
+                    <input id="port" name="port" type="text" placeholder="80" class="input-mini" ng-model="inputPort">
+                    <p class="help-block">incoming http port</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="failsToDown">failsToDown</label>
+                <div class="controls">
+                    <input id="failsToDown" name="failsToDown" type="text" placeholder="3" class="input-mini" ng-model="inputFailsToDown">
+                    <p class="help-block">failed attempts before declaring app dead</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="maxRetries">maxRetries</label>
+                <div class="controls">
+                    <input id="maxRetries" name="maxRetries" type="text" placeholder="3" class="input-mini" ng-model="inputMaxRetries">
+                    <p class="help-block">maximum times to attempt restart of app</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="targetRetryDelay">targetRetryDelay</label>
+                <div class="controls">
+                    <input id="targetRetryDelay" name="targetRetryDelay" type="text" placeholder="5" class="input-mini" ng-model="inputTargetRetryDelay">
+                    <p class="help-block">seconds to wait before restarting app</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="message404">message404</label>
+                <div class="controls">
+                    <input id="message404" name="message404" type="text" placeholder="host not found." class="input-xlarge" ng-model="inputMessage404">
+                    <p class="help-block">message to show when requested app does not exist</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="message503">message503</label>
+                <div class="controls">
+                    <input id="message503" name="message503" type="text" placeholder="host unavailable." class="input-xlarge" ng-model="inputMessage503">
+                    <p class="help-block">message to display when a app is not available</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="logLevel">logLevel</label>
+                <div class="controls">
+                    <input id="logLevel" name="logLevel" type="text" placeholder="debug" class="input-small" ng-model="inputLogLevel">
+                    <p class="help-block">logging level</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="logFile">logFile</label>
+                <div class="controls">
+                    <input id="logFile" name="logFile" type="text" placeholder="app.log" class="input-large" ng-model="inputLogFile">
+                    <p class="help-block">file path to save log to</p>
+                </div>
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="control-group">
+                <label class="control-label" for="save"></label>
+                <div class="controls">
+                    <button id="save" name="save" ng-click="save()" class="btn btn-inverse">Save</button>
+                    <button id="discard" name="discard" ng-click="discard()" class="btn btn-default">Discard</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>

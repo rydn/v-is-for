@@ -1,6 +1,6 @@
 //	dependencies
 var httpProxy = require( 'http-proxy' ),
-	every = require( 'fluent-time' ).every,
+	Cluster = require( 'cluster2' ),
 	_ = require( 'lodash' );
 //	modules
 var $logger = require( '../lib/logger' ),
@@ -43,10 +43,12 @@ var Proxy = function ( incommingPort ) {
 					};
 					var instrument = require( './instrument' );
 					httpProxy.setMaxSockets( 5000 );
-					//	start server with instrumentation and handler(which we pass routes to) on incommingPort
-					$this.server = httpProxy.createServer( instrument.middleware( ), require( './handler' )( function ( ) {
+					//	start server with instrumentation and handler(which we pass routes to) 
+					$this.server = httpProxy.createServer( instrument.middleware( ), require( './handler' )( function ( $proxy ) {
 						return $this.routes;
-					} ) ).listen( $this.incommingPort );
+					} ) );
+					//	start listening on incommingPort
+					$this.server.listen( $this.incommingPort );
 					//	expose stats methods
 					$this.stats = instrument.stats;
 					$this.getStats = instrument.getStats;
