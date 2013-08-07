@@ -1,4 +1,5 @@
-var $DB = require( '../data/' ),
+var _ = require( 'lodash' ),
+	$DB = require( '../data/' ),
 	$logger = require( '../lib/logger' );
 var $db = new $DB( );
 module.exports = {
@@ -101,5 +102,21 @@ module.exports = {
 			}
 			res.json( returnA );
 		};
+	},
+	chartEndpoint: function ( req, res ) {
+		var requestedSite = req.params.site;
+		$db.Ping.find( {
+			url: 'http://' + requestedSite
+		}, function ( err, pings ) {
+			if ( err ) {
+				logger.error( err );
+				res.end( 503 );
+			} else {
+				var values = _.map(pings, function(ping){
+					return [ping.timestamp, ping.latency];
+				});
+				res.json({key:requestedSite, values: values});
+			}
+		} );
 	}
 };

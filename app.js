@@ -48,6 +48,8 @@ app.get('/api/v1/pings', $routes.pings.getAll);
 app.get('/api/v1/pings/bysite/:site', $routes.pings.getForSite);
 app.get('/api/v1/pings/bystatus/:status', $routes.pings.getForStatus);
 app.get('/api/v1/pings/query/:site/:status', $routes.pings.getQuery);
+app.get('/api/v1/pings/chartquery/:site', $routes.pings.chartEndpoint);
+
 
 app.get('/api/v1/pings/status', $routes.pings.getStatuses($proxy));
 //	Start Admin Http interface

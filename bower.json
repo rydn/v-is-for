@@ -11,7 +11,9 @@
     "jquery": "~2.0.3",
     "bootplus": "aozora/bootplus#~1.0.3",
     "bootstrap-growl": "~1.1.0",
-    "fluent-time": "~0.0.9"
+    "fluent-time": "~0.0.9",
+    "d3": "~3.2.8",
+    "nvd3": "~1.0.0-beta"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
