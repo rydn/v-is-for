@@ -53,6 +53,13 @@ angular.module( 'vIsForVirtualApp' )
 				}
 			} );
 		};
+		var getPingStatus = function(){
+			$http.get('/api/v1/pings/status').success(function(pingStatus){
+				if(pingStatus){
+					$rootScope.pingStatus = pingStatus;
+				}
+			})
+		}
 		var doFullRefresh = function ( hideAlert ) {
 			if ( !hideAlert ) {
 				$.bootstrapGrowl( 'refreshing...', {
@@ -62,6 +69,7 @@ angular.module( 'vIsForVirtualApp' )
 			getApps( );
 			getProxyStatus( );
 			getHits( );
+			getPingStatus();
 		};
 		///////////////////
 		//	initialize //

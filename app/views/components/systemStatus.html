@@ -21,7 +21,7 @@
     <div class="row-fluid">
         <table class="table table-condensed">
             <thead>
-                <tr style="font-size:11px; text-align: center;">
+                <tr>
                     <th>Domain</th>
                     <th># Hits</th>
                 </tr>
@@ -30,6 +30,27 @@
                 <tr ng-repeat="appstat in stats.persite">
                     <td ng-bind="appstat.domain"></td>
                     <td ng-bind="appstat.hits"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h4>Endpoint Health</h4>
+    <div class="row-fluid">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>url</th>
+                    <th>status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="status in pingStatus">
+                    <td ng-bind="status.url"></td>
+                    <td>
+                        <i class="icon-ok-circle" ng-show="status.status_num > 0"></i>
+                        <i class="icon-exclamation-sign" ng-show="status.status_num == 0"></i>
+                        <i class="icon-ban-circle" ng-show="status.status_num < 0"></i>&nbsp;{{status.status}}
+                    </td>
                 </tr>
             </tbody>
         </table>

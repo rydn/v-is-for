@@ -11,6 +11,8 @@ module.exports = function ( options ) {
 	$this.apps = [ ];
 	$this.processes = [ ];
 	$this.db = new $DB( );
+	//	array of hostnames to add to monitor latter
+	$this.hosts = [ ];
 	/**
 	 * load configuration from db initiate objects
 	 *
@@ -58,6 +60,8 @@ module.exports = function ( options ) {
 							$logger.warn( '"' + app.name + '"" existed, exitcode: ' + exitCode );
 						}
 					} );
+					$this.hosts.push( app.domain );
+					$this.hosts.push( app.target );
 					//	add to cache
 					$this.processes[ app.name ] = processRunner;
 					$logger.debug( '"' + app.name + '" configuration added to appManager' );

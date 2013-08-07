@@ -11,8 +11,10 @@ var Data = function(connectionString ) {
 	$this.common = require('./common');
 	//	Schema
 	$this._App = require('./schema/App');
+	$this._Ping = require('./schema/Ping');
 	//	Models
 	$this.App = mongoose.model('App', $this._App);
+	$this.Ping = mongoose.model('Ping', $this._Ping);
 	//////////////////////
 	//	Public Methods //
 	//////////////////////

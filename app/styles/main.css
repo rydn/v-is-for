@@ -2,6 +2,7 @@
  * {
     font-family:'Roboto', sans-serif;
     text-height: 13px;
+    
 }
 .mainView {
     margin-top: 55px;
@@ -36,7 +37,7 @@
     background: white;
 }
 .module h1{
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 100;
     margin-bottom: 2px;
     padding-bottom: 0;
@@ -46,5 +47,14 @@
     border-top: 1px solid #e3e3e3;
     text-align: center;
     font-size:12px;
-    font-weight: 600;
+    font-weight: 400;
+}
+.table th{
+    font-size: 11px;
+    font-weight: 100;
+    font-style: normal;
+}
+.table td{
+    font-weight: 400;
+    font-style: normal;
 }

@@ -43,6 +43,12 @@ app.get( '/api/v1/proxy/hits', $routes.proxy.hits( $proxy ) );
 app.post( '/api/v1/proxy/restart', $routes.proxy.restart( $proxy ) );
 app.post( '/api/v1/proxy/stop', $routes.proxy.stop( $proxy ) );
 app.post( '/api/v1/proxy/start', $routes.proxy.start( $proxy ) );
+//	pings
+app.get('/api/v1/pings', $routes.pings.getAll);
+app.get('/api/v1/pings/bysite/:site', $routes.pings.getForSite);
+app.get('/api/v1/pings/bystatus/:status', $routes.pings.getForStatus);
+app.get('/api/v1/pings/query/:site/:status', $routes.pings.getQuery);
+app.get('/api/v1/pings/status', $routes.pings.getStatuses($proxy));
 //	Start Admin Http interface
 app.listen( app.get( 'port' ), function ( ) {
 	$logger.info( "admin interface started! available on port " + app.get( 'port' ) );

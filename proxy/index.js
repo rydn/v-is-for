@@ -4,7 +4,8 @@ var httpProxy = require( 'http-proxy' ),
 	_ = require( 'lodash' );
 //	modules
 var $logger = require( '../lib/logger' ),
-	$DB = require( '../data/' );
+	$DB = require( '../data/' ),
+	$Pingu = require( '../pingu/' );
 var $db = new $DB( );
 $db.connect( );
 /**
@@ -19,6 +20,7 @@ var Proxy = function ( incommingPort ) {
 	$this.error = '';
 	//	get stats from instrumentation
 	$this.stats = require( './instrument' ).stats;
+	$this.hosts = [ ];
 	/**
 	 * start proxy with config pulled from db and transformed
 	 * @return {Function}
@@ -31,6 +33,8 @@ var Proxy = function ( incommingPort ) {
 				//	map returned object as domain:target hash
 				var routes = {};
 				_.each( $apps, function ( $app ) {
+					$this.hosts.push( $app.target );
+					$this.hosts.push( $app.domain );
 					routes[ $app.domain ] = $app.target;
 				} );
 				if ( routes ) {
@@ -59,7 +63,7 @@ var Proxy = function ( incommingPort ) {
 					$logger.info( 'proxy started! available on port: ' + incommingPort );
 					$this.status = 'running';
 					//	error events
-					$this.server.on( 'clientError', function ( err, req, res ) {
+					$this.server.on( 'clientError', function ( err ) {
 						if ( err ) {
 							$logger.error( 'clientError||' + err );
 							$this.hasErr = true;
@@ -67,7 +71,7 @@ var Proxy = function ( incommingPort ) {
 							$this.status = 'error: ' + err;
 						}
 					} );
-					$this.server.on( 'close', function ( err, req, res ) {
+					$this.server.on( 'close', function ( err ) {
 						if ( err ) {
 							$logger.error( 'close||' + err );
 							$this.hasErr = true;
@@ -75,15 +79,16 @@ var Proxy = function ( incommingPort ) {
 							$this.status = 'error: ' + err;
 						}
 					} );
-					$this.server.proxy.on( 'proxyError', function ( err, req, res ) {
-						// if ( err ) {
-						// 	$logger.error( 'proxyError||'+err );
-						// 	$this.hasErr = true;
-						// 	$this.error = err;
-						// }
-						res.end( );
+					$this.server.proxy.on( 'proxyError', function ( err ) {
+						if ( err ) {
+							$logger.error( 'proxyError|| ' + err );
+							$this.hasErr = true;
+							$this.error = err;
+						}
 					} );
 				}
+				//	add checks for all hosts
+				$this.pingu = new $Pingu( $this.hosts );
 			}
 		} );
 	};
