@@ -19,14 +19,14 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 	 * @param  {Object} pings
 	 *
 	 */
-	$scope.handle = function(pings){
+	$scope.handle = function ( pings ) {
 		//	update properties
-			$scope.pings = pings.data;
-			$scope.nextPingsUrl = pings.next;
-			$scope.prevPingsUrl = pings.prev;
-			$scope.skipDigit = pings.prev.indexOf( 'skip=' ) > 0 ? true : false;
-			$scope.nextDigit = pings.data.length == 15 ? true : false;
-		};
+		$scope.pings = pings.data;
+		$scope.nextPingsUrl = pings.next;
+		$scope.prevPingsUrl = pings.prev;
+		$scope.skipDigit = pings.prev.indexOf( 'skip=' ) > 0 ? true : false;
+		$scope.nextDigit = pings.data.length == 15 ? true : false;
+	};
 	/**
 	 * retrieve initial data set
 	 *
@@ -62,7 +62,7 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 	 *
 	 */
 	$scope.renderChart = function ( ) {
-		d3.json( '/api/v1/pings/chartquery/'+$scope.selectedUrl, function ( data ) {
+		d3.json( '/api/v1/pings/chartquery/' + $scope.selectedUrl, function ( data ) {
 			nv.addGraph( function ( ) {
 				var chart = nv.models.stackedAreaChart( )
 					.x( function ( d ) {
@@ -72,12 +72,10 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 						return d[ 1 ]
 					} )
 					.clipEdge( true );
-				chart.xAxis
-					.tickFormat( function ( d ) {
-						return d3.time.format( '%x' )( new Date( d ) )
-					} );
-				chart.yAxis
-					.tickFormat( d3.format( ',.2f' ) );
+				chart.xAxis.tickFormat( function ( d ) {
+					return d3.time.format( '%x' )( new Date( d ) )
+				} );
+				chart.yAxis.tickFormat( d3.format( ',.2f' ) );
 				d3.select( '#chart svg' )
 					.datum( data )
 					.transition( ).duration( 500 ).call( chart );
@@ -90,4 +88,10 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 	//	on run //
 	//////////////
 	$scope.init( );
+	$scope.renderChart( );
+	//	update every 45 seconds
+	$scope.refresher = FluentTime.every( 45 ).seconds( function ( ) {
+		$scope.init( );
+		$scope.renderChart( );
+	} );
 } );

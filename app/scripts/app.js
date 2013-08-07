@@ -10,10 +10,10 @@ angular.module( 'vIsForVirtualApp', [ 'ngResource' ] )
 				templateUrl: 'views/confirmDelete.html',
 				controller: 'ConfirmDeleteCtrl'
 			} )
-			.when('/pings/:url', {
+			.when( '/pings/:url', {
 				templateUrl: 'views/pings.html',
-				controller:'PingsCtrl'
-			})
+				controller: 'PingsCtrl'
+			} )
 			.otherwise( {
 				redirectTo: '/'
 			} );

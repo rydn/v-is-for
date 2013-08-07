@@ -115,7 +115,7 @@ module.exports = {
 				var values = _.map(pings, function(ping){
 					return [ping.timestamp, ping.latency];
 				});
-				res.json({key:requestedSite, values: values});
+				res.json([{key:requestedSite, values: values}]);
 			}
 		} );
 	}

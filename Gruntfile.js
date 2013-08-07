@@ -196,15 +196,15 @@ module.exports = function ( grunt ) {
 		htmlmin: {
 			dist: {
 				options: {
-					/*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
+					// removeCommentsFromCDATA: true,
+					// // https://github.com/yeoman/grunt-usemin/issues/44
+					// collapseWhitespace: true,
+					// collapseBooleanAttributes: true,
+					// removeAttributeQuotes: true,
+					// removeRedundantAttributes: true,
+					// useShortDoctype: true,
+					// removeEmptyAttributes: true,
+					// removeOptionalTags: true
 				},
 				files: [ {
 					expand: true,
@@ -283,15 +283,17 @@ module.exports = function ( grunt ) {
 				}
 			}
 		},
-     bower_postinst: {
-        dist: {
-            options: {
-                components: {
-                    'bootplus': ['npm', {'make': 'bootplus'}]
-                }
-            }
-        }
-    }
+		bower_postinst: {
+			dist: {
+				options: {
+					components: {
+						'bootplus': [ 'npm', {
+							'make': 'bootplus'
+						} ]
+					}
+				}
+			}
+		}
 	} );
 	grunt.registerTask( 'server', function ( target ) {
 		if ( target === 'dist' ) {
@@ -313,7 +315,7 @@ module.exports = function ( grunt ) {
 	] );
 	grunt.registerTask( 'build', [
 		'clean:dist',
-    'bower_postinst',
+		'bower_postinst',
 		'useminPrepare',
 		'concurrent:dist',
 		'concat',

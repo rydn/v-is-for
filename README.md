@@ -14,7 +14,7 @@ Once that completes to compile clientside assets and build dependencies like boo
 
 Import the sample file which lives in data/sample.json using mongo-import into a db called visfor targeting a collection called apps
 <pre>
-    mongo-import -h localhost -d visfor -c apps data/sample.json
+    mongo -import -h localhost -d visfor -c apps data/app.sample.json
 </pre>
 
 The admin interface is available on port 5000. 
