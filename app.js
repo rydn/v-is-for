@@ -19,11 +19,6 @@ app.configure( function ( ) {
 	app.use( express.methodOverride( ) );
 	app.use( express.static( __dirname + '/app' ) );
 	app.use( app.router );
-	//	logging method
-	app.use( function ( req, res, next ) {
-		$logger.trace( '[http] ' + req.method + ' > ' + req.url );
-		next( );
-	} );
 } );
 //	Admin http routes
 //	apps
@@ -49,14 +44,13 @@ app.get( '/api/v1/pings/bysite/:site', $routes.pings.getForSite );
 app.get( '/api/v1/pings/bystatus/:status', $routes.pings.getForStatus );
 app.get( '/api/v1/pings/query/:site/:status', $routes.pings.getQuery );
 app.get( '/api/v1/pings/chartquery/:site', $routes.pings.chartEndpoint );
-
-
 app.get( '/api/v1/pings/status', $routes.pings.getStatuses( $proxy ) );
 //	Start Admin Http interface
 app.listen( app.get( 'port' ), function ( ) {
 	$logger.info( "admin interface started! available on port " + app.get( 'port' ) );
 	//	init and start apps
 	$appManager.loadConfigurations( function ( err, procs ) {
+		//	start app manager
 		$appManager.startAll( );
 		//	start proxy
 		$proxy.initRoutesAndStart( );

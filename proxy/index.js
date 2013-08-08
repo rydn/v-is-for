@@ -60,13 +60,13 @@ var Proxy = function ( incommingPort ) {
 					//	config
 					$this.server.httpAllowHalfOpen = true;
 					//	log
-					$logger.info( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
+					$logger.debug( 'proxy routes set as: ' + JSON.stringify( $this.routes ) );
 					$logger.info( 'proxy started! available on port: ' + incommingPort );
 					$this.status = 'running';
 					//	error events
 					$this.server.on( 'clientError', function ( err ) {
 						if ( err ) {
-							$logger.error( 'clientError||' + err );
+							$logger.debug( 'clientError||' + err );
 							$this.hasErr = true;
 							$this.error = err;
 							$this.status = 'error: ' + err;
@@ -74,7 +74,7 @@ var Proxy = function ( incommingPort ) {
 					} );
 					$this.server.on( 'close', function ( err ) {
 						if ( err ) {
-							$logger.error( 'close||' + err );
+							$logger.debug( 'close||' + err );
 							$this.hasErr = true;
 							$this.error = err;
 							$this.status = 'error: ' + err;
@@ -82,7 +82,7 @@ var Proxy = function ( incommingPort ) {
 					} );
 					$this.server.proxy.on( 'proxyError', function ( err ) {
 						if ( err ) {
-							$logger.error( 'proxyError|| ' + err );
+							$logger.debug( 'proxyError|| ' + err );
 							$this.hasErr = true;
 							$this.error = err;
 						}
