@@ -64,21 +64,24 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 	$scope.renderChart = function ( ) {
 		d3.json( '/api/v1/pings/chartquery/' + $scope.selectedUrl, function ( data ) {
 			nv.addGraph( function ( ) {
-				var chart = nv.models.stackedAreaChart( )
+				var chart = nv.models.cumulativeLineChart( )
 					.x( function ( d ) {
-						return d[ 0 ]
+						return d[ 0 ];
 					} )
 					.y( function ( d ) {
-						return d[ 1 ]
-					} )
-					.clipEdge( true );
-				chart.xAxis.tickFormat( function ( d ) {
-					return d3.time.format( '%x' )( new Date( d ) )
-				} );
-				chart.yAxis.tickFormat( d3.format( ',.2f' ) );
+						return Number( d[ 1 ] );
+					} ) //adjusting, 100% is 1.00, not 100 as it is in the data
+				.color( d3.scale.category10( ).range( ) )
+					.clipVoronoi( false );
+				chart.xAxis
+					.tickFormat( function ( d ) {
+						return d3.time.format( '%X' )( new Date( ) );
+					} );
+				chart.yAxis.tickFormat( d3.format( '.2d' ) );
 				d3.select( '#chart svg' )
 					.datum( data )
-					.transition( ).duration( 500 ).call( chart );
+					.transition( ).duration( 500 )
+					.call( chart );
 				nv.utils.windowResize( chart.update );
 				return chart;
 			} );
@@ -89,9 +92,4 @@ angular.module( 'vIsForVirtualApp' ).controller( 'PingsCtrl', function ( $scope,
 	//////////////
 	$scope.init( );
 	$scope.renderChart( );
-	//	update every 45 seconds
-	$scope.refresher = FluentTime.every( 45 ).seconds( function ( ) {
-		$scope.init( );
-		$scope.renderChart( );
-	} );
 } );
