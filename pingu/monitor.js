@@ -1,8 +1,10 @@
 var http = require( 'http' ),
 	fs = require( 'fs' ),
 	util = require( 'util' ),
-	every = require( 'fluent-time' ).every,
-	EventEmitter = require( 'events' ).EventEmitter,
+	every = require( 'fluent-time' )
+		.every,
+	EventEmitter = require( 'events' )
+		.EventEmitter,
 	statusCodes = http.STATUS_CODES,
 	$logger = require( '../lib/logger' );
 /*
@@ -46,9 +48,10 @@ Monitor.prototype.start = function ( ) {
 		time = Date.now( );
 	$logger.debug( 'starting to monitor: "' + $this.website + '" every ' + $this.timeout + ' seconds' );
 	// create an interval for pings
-	$this.handle = every( $this.timeout ).seconds( function ( ) {
-		$this.ping( );
-	} );
+	$this.handle = every( $this.timeout )
+		.seconds( function ( ) {
+			$this.ping( );
+		} );
 };
 Monitor.prototype.stop = function ( ) {
 	clearInterval( this.handle );
@@ -58,10 +61,12 @@ Monitor.prototype.stop = function ( ) {
 Monitor.prototype.ping = function ( ) {
 	var $this = this,
 		req;
-	
-	$this.currentTime = new Date( ).getTime( );
+
+	$this.currentTime = new Date( )
+		.getTime( );
 	req = http.request( $this.website, function ( res ) {
-		$this.endTime = new Date( ).getTime( );
+		$this.endTime = new Date( )
+			.getTime( );
 		// Website is up
 		if ( res.statusCode === 200 ) {
 			$this.timeTaken = $this.endTime - $this.currentTime;

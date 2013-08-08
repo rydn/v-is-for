@@ -1,4 +1,5 @@
-var mstats = require( 'measured' ).createCollection( ),
+var mstats = require( 'measured' )
+	.createCollection( ),
 	redis = require( 'redis' ),
 	$logger = require( '../lib/logger' );
 var db = redis.createClient( );
@@ -7,8 +8,10 @@ var db = redis.createClient( );
 exports.stats = mstats;
 exports.getStats = function ( ) {
 	return {
-		knownAppRequestsPerSecond: mstats.meter( 'knownAppRequestsPerSecond' ).toJSON( ),
-		allRequestsPerSecond: mstats.meter( 'allRequestsPerSecond' ).toJSON( )
+		knownAppRequestsPerSecond: mstats.meter( 'knownAppRequestsPerSecond' )
+			.toJSON( ),
+		allRequestsPerSecond: mstats.meter( 'allRequestsPerSecond' )
+			.toJSON( )
 	};
 };
 //	middleware handler
@@ -18,8 +21,10 @@ exports.middleware = function ( ) {
 		if ( typeof ( req.headers.host ) !== 'undefined' ) {
 			db.zincrby( 'stats:persite', 1, req.headers.host );
 			db.zincrby( 'stats:hits', 1, 'hit' );
-			mstats.meter( 'knownAppRequestsPerSecond' ).mark( );
-			mstats.meter( 'allRequestsPerSecond' ).mark( );
+			mstats.meter( 'knownAppRequestsPerSecond' )
+				.mark( );
+			mstats.meter( 'allRequestsPerSecond' )
+				.mark( );
 			next( );
 		} else {
 			res.writeHead( 503 );

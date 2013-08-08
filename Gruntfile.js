@@ -5,7 +5,8 @@ var lrSnippet = require( 'connect-livereload' )( {
 	port: LIVERELOAD_PORT
 } );
 var mountFolder = function ( connect, dir ) {
-	return connect.static( require( 'path' ).resolve( dir ) );
+	return connect.static( require( 'path' )
+		.resolve( dir ) );
 };
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -14,14 +15,17 @@ var mountFolder = function ( connect, dir ) {
 // 'test/spec/**/*.js'
 module.exports = function ( grunt ) {
 	// load all grunt tasks
-	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
+	require( 'matchdep' )
+		.filterDev( 'grunt-*' )
+		.forEach( grunt.loadNpmTasks );
 	// configurable paths
 	var yeomanConfig = {
 		app: 'app',
 		dist: 'dist'
 	};
 	try {
-		yeomanConfig.app = require( './bower.json' ).appPath || yeomanConfig.app;
+		yeomanConfig.app = require( './bower.json' )
+			.appPath || yeomanConfig.app;
 	} catch ( e ) {}
 	grunt.initConfig( {
 		yeoman: yeomanConfig,
@@ -59,7 +63,7 @@ module.exports = function ( grunt ) {
 							lrSnippet,
 							mountFolder( connect, '.tmp' ),
 							mountFolder( connect, yeomanConfig.app )
-						];
+							];
 					}
 				}
 			},
@@ -69,7 +73,7 @@ module.exports = function ( grunt ) {
 						return [
 							mountFolder( connect, '.tmp' ),
 							mountFolder( connect, 'test' )
-						];
+							];
 					}
 				}
 			},
@@ -78,7 +82,7 @@ module.exports = function ( grunt ) {
 					middleware: function ( connect ) {
 						return [
 							mountFolder( connect, yeomanConfig.dist )
-						];
+							];
 					}
 				}
 			}

@@ -16,6 +16,10 @@ var $Ping = new mongoose.Schema( {
 		type: String,
 		required: true
 	},
-	timestamp:{type:Number, default:new Date().getTime()}
+	timestamp: {
+		type: Number,
+		default: new Date( )
+			.getTime( )
+	}
 } );
 module.exports = $Ping;

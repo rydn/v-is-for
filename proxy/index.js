@@ -19,7 +19,8 @@ var Proxy = function ( incommingPort ) {
 	$this.hasErr = false;
 	$this.error = '';
 	//	get stats from instrumentation
-	$this.stats = require( './instrument' ).stats;
+	$this.stats = require( './instrument' )
+		.stats;
 	$this.hosts = [ ];
 	/**
 	 * start proxy with config pulled from db and transformed

@@ -29,7 +29,7 @@ module.exports = function ( hosts ) {
 		 * @return {Null}
 		 */
 		add: function ( result ) {
-			$this.statuses[result.website] = result.result;
+			$this.statuses[ result.website ] = result.result;
 			$this.results._cache.push( result );
 		},
 		/**
@@ -94,11 +94,11 @@ module.exports = function ( hosts ) {
 				//	create new checker instance
 				var instance = new $this.mon( {
 					website: 'http://' + host,
-					timeout: 15
+					timeout: 30
 				} );
 				//	bind events
 				instance.on( 'up', function ( msg ) {
-					
+
 					//	save ping to db
 					var dbItem = new $db.Ping( {
 						url: msg.website,
@@ -107,7 +107,7 @@ module.exports = function ( hosts ) {
 					} );
 					dbItem.save( );
 					msg.result = 'up';
-				
+
 					$this.results.add( msg );
 				} );
 				instance.on( 'down', function ( msg ) {
@@ -118,7 +118,7 @@ module.exports = function ( hosts ) {
 						latency: -1,
 						status: 'down'
 					} );
-					dbItem.save();
+					dbItem.save( );
 					msg.result = 'down';
 					$this.results.add( msg );
 				} );
@@ -130,7 +130,7 @@ module.exports = function ( hosts ) {
 						latency: -1,
 						status: 'error'
 					} );
-					dbItem.save();
+					dbItem.save( );
 					msg.result = 'error';
 					$this.results.add( msg );
 				} );
@@ -142,7 +142,7 @@ module.exports = function ( hosts ) {
 						latency: -1,
 						status: 'stopped'
 					} );
-					dbItem.save();
+					dbItem.save( );
 					msg.result = 'stopped';
 					$this.results.add( msg );
 				} );
