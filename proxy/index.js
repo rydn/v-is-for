@@ -1,6 +1,5 @@
 //	dependencies
 var httpProxy = require( 'http-proxy' ),
-	Cluster = require( 'cluster2' ),
 	_ = require( 'lodash' );
 //	modules
 var $logger = require( '../lib/logger' ),

@@ -130,7 +130,7 @@ module.exports = {
 				res.json( [ {
 					key: requestedSite,
 					values: values
-				} ] );
+    } ] );
 			}
 		} );
 	}

@@ -92,7 +92,7 @@ module.exports = {
 			};
 			//	get metrics from proxy
 			var metrics = $this.proxy.getStats( );
-			var meparams = [ 'mean', 'count', 'currentRate', '1MinuteRate', '5MinuteRate', '15MinuteRate' ]
+			var meparams = [ 'mean', 'count', 'currentRate', '1MinuteRate', '5MinuteRate', '15MinuteRate' ];
 			_.each( meparams, function ( p ) {
 				metrics.knownAppRequestsPerSecond[ p ] = Math.round( metrics.knownAppRequestsPerSecond[ p ] * 100 ) / 100;
 				metrics.allRequestsPerSecond[ p ] = Math.round( metrics.allRequestsPerSecond[ p ] * 100 ) / 100;
