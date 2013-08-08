@@ -6,7 +6,7 @@ var configer = require( './lib/configer' );
 //	DEVELOPMENT //
 //////////////////
 configer.development = {
-	"constr": "mongodb://localhost/visfor",
+	"mongo_constr": "mongodb://localhost/visfor",
 	"url_base": "localhost", //	url without http and ports
 	"proxy_port": 80,
 	"admin_port": 5000,
@@ -16,7 +16,7 @@ configer.development = {
 //	PRODUCTION //
 /////////////////
 configer.production = {
-	"constr": "mongodb://data.domain.com/visfor",
+	"mongo_constr": "mongodb://data.domain.com/visfor",
 	"url_base": "domain.com", //	url without http and ports
 	"proxy_port": 80,
 	"admin_port": 5000,

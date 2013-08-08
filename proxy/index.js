@@ -2,11 +2,11 @@
 var httpProxy = require( 'http-proxy' ),
 	_ = require( 'lodash' );
 //	modules
-var $logger = require( '../lib/logger' ),
+var $logger = require( '../lib/logger' )(module),
+	$config = require('../config'),
 	$DB = require( '../data/' ),
 	$Pingu = require( '../pingu/' );
-var $db = new $DB( );
-$db.connect( );
+var $db = new $DB( $config.mongo_constr);
 /**
  * main proxy interface
  * @param  {Number} incommingPort
@@ -47,7 +47,7 @@ var Proxy = function ( incommingPort ) {
 					};
 					var instrument = require( './instrument' );
 					httpProxy.setMaxSockets( 5000 );
-					//	start server with instrumentation and handler(which we pass routes to) 
+					//	start server with instrumentation and handler(which we pass routes to)
 					$this.server = httpProxy.createServer( instrument.middleware( ), require( './handler' )( function ( $proxy ) {
 						return $this.routes;
 					} ) );

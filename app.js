@@ -1,13 +1,13 @@
 var express = require( "express" ),
 	//	internal libs
-	$logger = require( './lib/logger' ),
+	$logger = require( './lib/logger' )(module),
 	$Proxy = require( './proxy/' ),
 	$DB = require( './data/' ),
 	$AppManager = require( './appManager/' ),
 	$routes = require( './routes/' ),
 	$config = require( './config' );
 //	connect to db
-var $db = new $DB( );
+var $db = new $DB($config.mongo_constr );
 var $appManager = new $AppManager( {
 	monitor: true
 } );
@@ -59,7 +59,7 @@ app.get( '/api/v1/pings/chartquery/:site', $routes.pings.chartEndpoint );
 app.get( '/api/v1/pings/status', $routes.pings.getStatuses( $proxy ) );
 //
 //	Startup
-//	
+//
 //	Start Admin Http interface
 app.listen( app.get( 'port' ), function ( ) {
 	$logger.info( "admin interface started! available on port " + app.get( 'port' ) );

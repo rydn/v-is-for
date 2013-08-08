@@ -6,7 +6,7 @@ var http = require( 'http' ),
 	EventEmitter = require( 'events' )
 		.EventEmitter,
 	statusCodes = http.STATUS_CODES,
-	$logger = require( '../lib/logger' );
+	$logger = require( '../lib/logger' )(module);
 /*
     Monitor Constructor
 */

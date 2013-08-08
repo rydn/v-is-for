@@ -18,8 +18,7 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootplus/bootplus/css/bootplus.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootplus/bootplus/css/bootplus-responsive.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css">
-    nv.d3.css
+    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css">nv.d3.css
     <!-- endbuild -->
 </head>
 
@@ -49,9 +48,15 @@
     <div class="container-fluid mainView" ng-view=""></div>
 
 
-    
-    
-    
+
+    <script type="text/javascript">
+window.onerror = function(errorMsg, url, lineNumber)
+{
+    var e = encodeURIComponent;
+    (new Image()).src = 'http://127.0.0.1:6565/pusherror/?message=' + e(errorMsg) + '&url=' + e(url) + '&line=' + e(lineNumber);
+};
+    </script>
+
 
 
     <!-- build:js scripts/modules.js -->

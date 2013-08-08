@@ -1,4 +1,4 @@
-var $logger = require( '../lib/logger' );
+var $logger = require( '../lib/logger' )(module);
 module.exports = {
 	get: function ( req, res ) {
 		var $App = require( 'mongoose' )

@@ -1,7 +1,8 @@
 var _ = require( 'lodash' ),
 	$DB = require( '../data/' ),
-	$logger = require( '../lib/logger' );
-var $db = new $DB( );
+	$config = require('../config'),
+	$logger = require( '../lib/logger' )(module);
+var $db = new $DB( $config.mongo_constr);
 module.exports = {
 	getAll: function ( req, res ) {
 		var skip = Number( req.query.skip ) || 0;

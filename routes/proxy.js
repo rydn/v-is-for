@@ -1,4 +1,4 @@
-var $logger = require( '../lib/logger' ),
+var $logger = require( '../lib/logger' )(module),
 	redis = require( 'redis' ),
 	_ = require( 'lodash' );
 var db = redis.createClient( );

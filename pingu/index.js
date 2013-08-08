@@ -1,6 +1,7 @@
-var $logger = require( '../lib/logger' ),
+var $logger = require( '../lib/logger' )( module ),
+	$config = require( '../config' ),
 	$DB = require( '../data/' );
-var $db = new $DB( );
+var $db = new $DB( $config.mongo_constr );
 module.exports = function ( hosts ) {
 	//	global object
 	var $this = this;
@@ -98,7 +99,6 @@ module.exports = function ( hosts ) {
 				} );
 				//	bind events
 				instance.on( 'up', function ( msg ) {
-
 					//	save ping to db
 					var dbItem = new $db.Ping( {
 						url: msg.website,
@@ -107,7 +107,6 @@ module.exports = function ( hosts ) {
 					} );
 					dbItem.save( );
 					msg.result = 'up';
-
 					$this.results.add( msg );
 				} );
 				instance.on( 'down', function ( msg ) {

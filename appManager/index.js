@@ -2,7 +2,7 @@ var path = require( 'path' ),
 	_ = require( 'lodash' ),
 	fs = require( 'fs' ),
 	$DB = require( '../data/' ),
-	$logger = require( '../lib/logger' );
+$logger = require( '../lib/logger' )(module);
 //apacheTail.start( );
 module.exports = function ( options ) {
 	//	init

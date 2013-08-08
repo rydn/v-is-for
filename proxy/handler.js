@@ -1,4 +1,4 @@
-var $logger = require( '../lib/logger' ),
+var $logger = require( '../lib/logger' )(module),
 	httpProxy = require( 'http-proxy' );
 //	module
 module.exports = function ( $Routes ) {

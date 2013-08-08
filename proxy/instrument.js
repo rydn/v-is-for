@@ -1,7 +1,7 @@
 var mstats = require( 'measured' )
 	.createCollection( ),
 	redis = require( 'redis' ),
-	$logger = require( '../lib/logger' );
+	$logger = require( '../lib/logger' )(module);
 var db = redis.createClient( );
 //	exposed methods
 //	stats

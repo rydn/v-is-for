@@ -1,13 +1,15 @@
-var $logger = require( '../lib/logger' ),
+var $logger = require( '../lib/logger' )( module ),
 	mongoose = require( 'mongoose' ),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId,
 	db = mongoose.connection;
-//	bind to console
-db.on( 'error', console.error.bind( console, 'connection error:' ) );
+//	on error
+db.on( 'error', function ( err ) {
+	$logger.trace( 'mongoose connection error: ' + err.toString( ) );
+} );
 //	on connect
 db.once( 'open', function callback( ) {
-	$logger.info( 'Connected to db' );
+	$logger.info( 'mongoose connection established' );
 } );
 //	expose module
 module.exports = {

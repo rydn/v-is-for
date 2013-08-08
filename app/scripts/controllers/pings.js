@@ -10,7 +10,7 @@ angular.module( 'vIsForVirtualApp' )
 		$scope.nextDigit = null;
 		$scope.selectedUrl = $routeParams.url;
 		////////////////////////
-		//	scope methods    // 
+		//	scope methods    //
 		////////////////////////
 		/**
 		 * handles response from data endpoint and updates scope properties
@@ -66,6 +66,7 @@ angular.module( 'vIsForVirtualApp' )
 		 *
 		 */
 		$scope.renderChart = function ( ) {
+			$.bootstrapGrowl( 'getting chart data...' );
 			d3.json( '/api/v1/pings/chartquery/' + $scope.selectedUrl, function ( data ) {
 				nv.addGraph( function ( ) {
 					var chart = nv.models.scatterChart( )
@@ -80,7 +81,7 @@ angular.module( 'vIsForVirtualApp' )
 						.clipVoronoi( true );
 					chart.xAxis
 						.tickFormat( function ( d ) {
-							return d3.time.format( '%x' )( new Date( d ) );
+							return d3.time.format( '%c' )( new Date( d ) );
 						} )
 						.axisLabel( 'Date' );
 					chart.yAxis.tickFormat( d3.format( '.2d' ) )
@@ -93,6 +94,7 @@ angular.module( 'vIsForVirtualApp' )
 					nv.utils.windowResize( chart.update );
 					return chart;
 				} );
+
 			} );
 		};
 		//////////////

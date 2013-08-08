@@ -1,6 +1,6 @@
 var _ = require( 'lodash' ),
 	//	modules
-	$logger = require( '../lib/logger' );
+	$logger = require( '../lib/logger' )(module);
 //	App Manager Routes
 module.exports = {
 	/**
