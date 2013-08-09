@@ -45,14 +45,14 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a ng-click="proxyStop()"><i class="icon-pause"></i>&nbsp;Stop</a>
+                            <li><a class="btn btn-link" ng-click="appStop($event)" ng-class="{disabled:!app.pid}" data-appname="{{app.name}}"><i class="icon-pause"></i>&nbsp;Stop</a>
                             </li>
-                            <li><a ng-click="proxyStart()"><i class="icon-play-circle"></i>&nbsp;Start</a>
+                            <li><a class="btn btn-link" ng-click="appStart($event)" ng-class="{disabled:app.pid > 0}" data-appname="{{app.name}}"><i class="icon-play-circle"></i>&nbsp;Start</a>
                             </li>
-                            <li><a ng-click="proxyRestart()"><i class="icon-refresh"></i>&nbsp;Restart</a>
+                            <li><a class="btn btn-link" ng-click="appRestart($event)" data-appname="{{app.name}}"><i class="icon-refresh"></i>&nbsp;Restart</a>
                             </li>
                             <li>
-                                <a href="#/apps/{{app._id}}/delete"><i class="icon-remove"></i>&nbsp;Delete</a>
+                                <a class="btn btn-link" href="#/apps/{{app._id}}/delete"><i class="icon-remove"></i>&nbsp;Delete</a>
                             </li>
                         </ul>
                     </div>

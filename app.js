@@ -40,6 +40,9 @@ app.get( '/api/v1/appmanager/status', $routes.appManager.status( $appManager ) )
 app.post( '/api/v1/appmanager/restartall', $routes.appManager.restartAll( $appManager ) );
 app.post( '/api/v1/appmanager/stopall', $routes.appManager.stopAll( $appManager ) );
 app.post( '/api/v1/appmanager/startall', $routes.appManager.startAll( $appManager ) );
+app.post( '/api/v1/appmanager/startapp', $routes.appManager.startApp( $appManager ) );
+app.post( '/api/v1/appmanager/stopapp', $routes.appManager.stopApp( $appManager ) );
+app.post( '/api/v1/appmanager/restartapp', $routes.appManager.restartApp( $appManager ) );
 ////////////
 //	proxy //
 ////////////

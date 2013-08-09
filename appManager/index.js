@@ -170,7 +170,7 @@ module.exports = function ( options ) {
 	 *
 	 * @return {Object}
 	 */
-	$this.startApp = function ( appName ) {
+	$this.startApp = function ( appName, callback ) {
 		if ( appName ) {
 			var handler = $this.processes[ appName ];
 			if ( handler ) {
@@ -179,12 +179,22 @@ module.exports = function ( options ) {
 					handler.start( function ( procPID ) {
 						handler.status = 'running';
 						handler.pid = procPID;
-						$logger.info( '"' + app.appName + '" started, pid: ' + procPID );
+						$logger.info( '"' + appName + '" started, pid: ' + procPID );
+						if(callback){
+							callback(null, procPID);
+						}
 					} );
 				} else {
-					$logger.info( '"' + app.appName + '" already running' );
+					$logger.info( '"' + appName + '" already running' );
+					if(callback){
+						callback( '"' + appName + '" already running' ,null);
+					}
 				}
+			}else{
+				callback('unknown hander', null);
 			}
+		}else{
+			callback('a app name is required', null);
 		}
 	};
 	/**
@@ -196,7 +206,7 @@ module.exports = function ( options ) {
 	 *
 	 * @return {Object}
 	 */
-	$this.stopApp = function ( appName ) {
+	$this.stopApp = function ( appName,callback ) {
 		if ( appName ) {
 			var handler = $this.processes[ appName ];
 			if ( handler ) {
@@ -204,7 +214,12 @@ module.exports = function ( options ) {
 				handler.status = 'stopped';
 				handler.pid = null;
 				$logger.info( '"' + appName + '" stopping...' );
+				callback(null,'requested action completed');
+			}else{
+				callback('cant find app handler');
 			}
+		}else{
+			callback('a app name is required');
 		}
 	};
 	/**
@@ -216,13 +231,18 @@ module.exports = function ( options ) {
 	 *
 	 * @return {Object}
 	 */
-	$this.restartApp = function ( appName ) {
+	$this.restartApp = function ( appName ,callback) {
 		if ( appName ) {
 			var handler = $this.processes[ appName ];
 			if ( handler ) {
 				handler.restart( );
 				$logger.info( '"' + appName + '" restarting...' );
+				callback(null,'requested action completed');
+			}else{
+				callback('cant find app handler');
 			}
+		}else{
+			callback('a app name is required');
 		}
 	};
 };

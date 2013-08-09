@@ -9,12 +9,10 @@ angular.module( 'vIsForVirtualApp' )
 			id: '@_id'
 		} );
 		//	setup tabs
-		$( '#sideTabs a' )
-			.click( function ( e ) {
-				e.preventDefault( );
-				$( this )
-					.tab( 'show' );
-			} );
+		$( '#sideTabs a' ).click( function ( e ) {
+			e.preventDefault( );
+			$( this ).tab( 'show' );
+		} );
 		//	get apps
 		var getApps = function ( ) {
 			$http.get( '/api/v1/apps' )
@@ -35,7 +33,7 @@ angular.module( 'vIsForVirtualApp' )
 						} );
 				} );
 		};
-		//	make call for status 
+		//	make call for status
 		var getProxyStatus = function ( ) {
 			$http.get( '/api/v1/proxy/status' )
 				.success( function ( proxyStatus ) {
@@ -84,10 +82,9 @@ angular.module( 'vIsForVirtualApp' )
 		doFullRefresh( );
 		//	set to do a refresh every 20 seconds and hide the alert saying so
 		var every = FluentTime.every;
-		every( 10 )
-			.seconds( function ( ) {
-				doFullRefresh( true );
-			} );
+		every( 15 ).seconds( function ( ) {
+			doFullRefresh( true );
+		} );
 		//////////////////////
 		//	SCOPE METHODS //
 		//////////////////////
@@ -213,4 +210,58 @@ angular.module( 'vIsForVirtualApp' )
 					}, 500 );
 				} );
 		};
+		///////////////////////////////
+		//	app action controllers //
+		///////////////////////////////
+		$scope.appStart = function ( $event ) {
+			var appName = $( $event.currentTarget ).data( ).appname;
+			//	check if button is enabled
+			if ( !$( $event.currentTarget ).hasClass( "disabled" ) ) {
+				$.bootstrapGrowl( 'starting ' + appName + '...' );
+				$http.post( '/api/v1/appmanager/startapp', {
+					name: appName
+				} ).success( function ( response ) {
+					if ( !response.hasErr ) {
+						$.bootstrapGrowl( appName + ' restarted! new pid: ' + response.pid );
+						doFullRefresh( true );
+					} else {
+						$.bootstrapGrowl( 'woops something went wrong when tying to restart your app, try again maybe?' );
+						doFullRefresh( true );
+					}
+				} );
+			};
+		};
+		$scope.appStop = function ( $event ) {
+			var appName = $( $event.currentTarget ).data( ).appname;
+			//	check if button is enabled
+			if ( !$( $event.currentTarget ).hasClass( "disabled" ) ) {
+				$.bootstrapGrowl( 'stopping ' + appName + '...' );
+				$http.post( '/api/v1/appmanager/stopapp', {
+					name: appName
+				} ).success( function ( response ) {
+					if ( !response.hasErr ) {
+						$.bootstrapGrowl( appName + ' stopped!' );
+						doFullRefresh( true );
+					} else {
+						$.bootstrapGrowl( 'woops something went wrong when tying to restart your app, try again maybe?' );
+						doFullRefresh( true );
+					}
+				} );
+			}
+		};
+		$scope.appRestart = function ( $event ) {
+			var appName = $( $event.currentTarget ).data( ).appname;
+			$.bootstrapGrowl( 'starting ' + appName + '...' );
+			$http.post( '/api/v1/appmanager/restartapp', {
+				name: appName
+			} ).success( function ( response ) {
+				if ( !response.hasErr ) {
+					$.bootstrapGrowl( appName + ' restarted! new pid: ' + response.pid );
+					doFullRefresh( true );
+				} else {
+					$.bootstrapGrowl( 'woops something went wrong when tying to restart your app, try again maybe?' );
+					doFullRefresh( true );
+				}
+			} );
+		}
 	} );
