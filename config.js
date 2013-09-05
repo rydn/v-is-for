@@ -8,8 +8,8 @@ var configer = require( './lib/configer' );
 configer.development = {
 	"mongo_constr": "mongodb://localhost/visfor",
 	"url_base": "localhost", //	url without http and ports
-	"proxy_port": 80,
-	"admin_port": 5000,
+	"proxy_port": 5011,
+	"admin_port": 5012,
 	"admin_public": '/app'
 };
 /////////////////
@@ -18,8 +18,8 @@ configer.development = {
 configer.production = {
 	"mongo_constr": "mongodb://data.domain.com/visfor",
 	"url_base": "domain.com", //	url without http and ports
-	"proxy_port": 80,
-	"admin_port": 5000,
+	"proxy_port": 5011,
+	"admin_port": 5012,
 	"admin_public": '/dist'
 };
 
